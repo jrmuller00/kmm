@@ -84,16 +84,36 @@ class seasonSummary(object):
     def getSIError(self):
         return self.si - self.oldSI
 
-    def updateSI(self):
+    def updateSI(self, si):
         """
-        function updateSI will loop over all opponents
-        and update the team SI based on 
+        function updateSI is used during iteration
+        on si.  The difference between the setSI 
+        function and theupdateSI function is that 
+        update will also update the oldSI value before
+        setting the new one.
+
+        input:
+            float   si
+        return:
+            null
         """
 
-        
+        self.oldSI = self.si
+        self.si = si
 
-        
+        return
 
+    def setSI(self, si):
+        """
+        function setSI will set the value for the 
+        strength index based on the user supplied value si
 
+        input:
+            float   si
 
+        return:
+            null
+        """
+        self.si = si
 
+        return
