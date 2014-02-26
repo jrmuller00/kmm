@@ -3,35 +3,29 @@ import seasonSummary
 class team(object):
     """
     class team will hold all the team information about a specific 
-<<<<<<< HEAD
     team including the team ID, team name, season summary dicitonary and
-=======
     team including the team ID, team name, index for matrix addressing, season summary dicitonary and
->>>>>>> Minor update to check home sync
     tournament summary dictionary
     """
 
     def __init__(self):
         self.id = 0
         self.name = ""
-<<<<<<< HEAD
-=======
+
+
         self.index = -1
->>>>>>> Minor update to check home sync
         self.seasonSummaryDict = {}
         self.tournamentSummaryDict = {}
         return
 
-<<<<<<< HEAD
     def __init__(self, id, name):
         self.id = id
         self.name = name
-=======
+
     def __init__(self, id, name, index):
         self.id = id
         self.name = name
         self.index = index
->>>>>>> Minor update to check home sync
         self.seasonSummaryDict = {}
         self.tournamentSummaryDict = {}
         return
@@ -50,17 +44,13 @@ class team(object):
     def getName(self):
         return self.name
 
-<<<<<<< HEAD
-=======
     def set_Index(self, index):
         self.index = index
         return
 
     def getIndex(self):
-        retun self.index
+        return self.index
 
-
->>>>>>> Minor update to check home sync
     def addSeasonGame(self, season, pf, pa, oppID):
         """
         add information about a season game
