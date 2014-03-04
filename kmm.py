@@ -5,6 +5,8 @@ import seasonSummary
 import random
 import tkinter
 import math
+from scipy.sparse import *
+from scipy import *
 from types import *
 from tkinter import messagebox
 from tkinter import filedialog
@@ -103,6 +105,113 @@ def readSeasonResults(filename = 'regular_season_results.csv'):
     return seasonDict
 
 
+def makeMatricies(teamDict, seasonDict):
+    """
+    function makeMatricies will create sparse matricies based on the data
+    in the seasonDict dictionary.  The matricies are as follows:
+
+        wlMatrix: win loss matrix where 1 indicates win and 0 indicates loss
+        pdMatrix: point differential matrix where entry [i,j] indicates the point differential in a game between team i and team j (score for team i - score for team j)
+        pfMatrix: points for matrix where entry [i,j] indicates teh points scored by team i on team j
+        paMatrix: points against matrix where entry [i,j] indicates the points scored against team i by team j
+
+    Note that the matricies are bundled in respective dictionaries with the season designator as a key
+
+    Input:
+        dict    seasonDict  dictionary storing all season results
+
+    Return:
+        tuple   (wlDict, pdDict, pfDict, paDict) dictionaries with matricies
+    """
+    wlDict = {}
+    pdDict = {}
+    pfDict = {}
+    paDict = {}
+    numTeams = len(teamDict.keys())
+
+    seasons = list(seasonDict.keys())
+
+    wlRow = []
+    wlCol = []
+    wlData = []
+    pdRow = []
+    pdCol = []
+    pdData = []
+    pfRow = []
+    pfCol = []
+    pfData = []
+    paRow = []
+    paCol = []
+    paData = []
+
+    for season in seasons:
+
+        wlRow.clear()
+        wlCol.clear()
+        wlData.clear()
+        pdRow.clear()
+        pdCol.clear()
+        pdData.clear()
+        pfRow.clear()
+        pfCol.clear()
+        pfData.clear()
+        paRow.clear()
+        paCol.clear()
+        paData.clear()
+
+        results = seasonDict[season]
+        for game in results:
+            wTeam = teamDict[int(game[2])].getIndex()
+            wScore = int(game[3])
+            lTeam = teamDict[int(game[4])].getIndex()
+            lScore = int(game[5])
+
+            #
+            # append 1 to (wTeam,lteam)
+            wlRow.append(wTeam)
+            wlCol.append(lTeam)
+            wlData.append(1)
+
+            #
+            # append point difference for (i,j) and (j,i)
+            pdRow.append(wTeam)
+            pdCol.append(lTeam)
+            pdData.append(wScore -lScore)
+
+            pdRow.append(lTeam)
+            pdCol.append(wTeam)
+            pdData.append(lScore - wScore)
+
+            pfRow.append(wTeam)
+            pfCol.append(lTeam)
+            pfData.append(wScore)
+
+            pfRow.append(lTeam)
+            pfCol.append(wTeam)
+            pfData.append(lScore)
+
+            paRow.append(wTeam)
+            paCol.append(lTeam)
+            paData.append(lScore)
+
+            paRow.append(lTeam)
+            paCol.append(wTeam)
+            paData.append(wScore)
+
+        wlMatrix = coo_matrix((wlData, (wlRow, wlCol)),shape=(numTeams,numTeams))
+        pdMatrix = coo_matrix(pdData, (pdRow, pdCol))
+        pfMatrix = coo_matrix(pfData, (pfRow, pfCol))
+        paMatrix = coo_matrix(paData, (paRow, paCol))
+
+        wlDict[season] = wlMatrix
+        pdDict[season] = pdMatrix
+        pfDict[season] = pfMatrix
+        paDict[season] = paMatrix
+
+    return 
+
+
+
 
 def main():
     """
@@ -116,6 +225,7 @@ def main():
     
     teamDict = readTeamList()
     seasonDict = readSeasonResults()
+    makeMatricies(teamDict, seasonDict)
     print ('Done!')
 
 

@@ -22,7 +22,6 @@ class seasonSummary(object):
         self.tpa = 0
         self.tpd = 0
         self.si = 0.0
-        self.oldSI = 0.0
         self.winPercent = 0.0
         self.recordList = []
         self.pdList = []
@@ -88,28 +87,6 @@ class seasonSummary(object):
 
     def getSI(self):
         return self.si
-
-    def getSIError(self):
-        return self.si - self.oldSI
-
-    def updateSI(self, si):
-        """
-        function updateSI is used during iteration
-        on si.  The difference between the setSI 
-        function and theupdateSI function is that 
-        update will also update the oldSI value before
-        setting the new one.
-
-        input:
-            float   si
-        return:
-            null
-        """
-
-        self.oldSI = self.si
-        self.si = si
-
-        return
 
     def setSI(self, si):
         """

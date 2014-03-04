@@ -100,26 +100,7 @@ class team(object):
     def getPD(self, season):
         return self.seasonSummaryDict[season].getPD()
 
-    def getSIError(self):
-        return self.seasonSummaryDict[season].getSIError()
 
-    def updateSI(self, season, si):
-        """
-        function updateSI is used during iteration
-        on si.  The difference between the setSI 
-        function and theupdateSI function is that 
-        update will also update the oldSI value before
-        setting the new one.
-
-        input:
-            str     season
-            float   si
-        return:
-            null
-        """
-
-        self.seasonSummaryDict[season].updateSI(si)
-        return
 
         
 
