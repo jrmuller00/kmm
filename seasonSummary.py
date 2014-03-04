@@ -24,6 +24,9 @@ class seasonSummary(object):
         self.si = 0.0
         self.oldSI = 0.0
         self.winPercent = 0.0
+        self.recordList = []
+        self.pdList = []
+        self.oppList = []
         return
 
     def addGame(self, pf, pa, oppID):
@@ -39,14 +42,19 @@ class seasonSummary(object):
             null
         """
 
+        self.oppList.append(oppID)
+        self.pdList.append(pf-pa)
+
         #
         # update team record
         if pf > pa:
             self.wins = self.wins + 1
             game = 'w'
+            self.recordList.append(1)
         else:
             self.losses = self.losses + 1
             game = 'l'
+            self.recordList.append(0)
 
         #
         # update si based on winning percentage
