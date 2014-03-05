@@ -145,7 +145,7 @@ def makeMatricies(teamDict, seasonDict):
     paData = []
 
     for season in seasons:
-
+        
         wlRow.clear()
         wlCol.clear()
         wlData.clear()
@@ -199,9 +199,9 @@ def makeMatricies(teamDict, seasonDict):
             paData.append(wScore)
 
         wlMatrix = coo_matrix((wlData, (wlRow, wlCol)),shape=(numTeams,numTeams))
-        pdMatrix = coo_matrix(pdData, (pdRow, pdCol))
-        pfMatrix = coo_matrix(pfData, (pfRow, pfCol))
-        paMatrix = coo_matrix(paData, (paRow, paCol))
+        pdMatrix = coo_matrix((pdData, (pdRow, pdCol)),shape=(numTeams,numTeams))
+        pfMatrix = coo_matrix((pfData, (pfRow, pfCol)),shape=(numTeams,numTeams))
+        paMatrix = coo_matrix((paData, (paRow, paCol)),shape=(numTeams,numTeams))
 
         wlDict[season] = wlMatrix
         pdDict[season] = pdMatrix
