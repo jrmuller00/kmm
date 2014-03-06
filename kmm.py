@@ -13,7 +13,7 @@ from tkinter import filedialog
 import csv
 
 
-def readTeamList(filename = "teams.csv"):
+def read_team_list(filename = "teams.csv"):
     """
     function readTeamList will read in the team list from a 
     csv file (default value is teams.csv) The format for the 
@@ -48,7 +48,7 @@ def readTeamList(filename = "teams.csv"):
     return teamDict
 
 
-def readSeasonResults(filename = 'regular_season_results.csv'):
+def read_season_results(filename = 'regular_season_results.csv'):
     """
     function readSeasonResults will read in the season results from
     a csv file (default value is regular_season_results.csv) The 
@@ -105,7 +105,7 @@ def readSeasonResults(filename = 'regular_season_results.csv'):
     return seasonDict
 
 
-def makeMatrix(teamDict, seasonDict):
+def make_matrix(teamDict, seasonDict):
     """
     function makeMatricies will create sparse matricies based on the data
     in the seasonDict dictionary.  The matricies are as follows:
@@ -163,26 +163,28 @@ def makeMatrix(teamDict, seasonDict):
             # append 1 to (lTeam,wteam)
             wlRow.append(lTeam)
             wlCol.append(wTeam)
-            wlData.append(1)
+            wlData.append(1.0)
 
             #
             # append point difference for at (lTeam,wTeam) 
             pdRow.append(lTeam)
             pdCol.append(wTeam)
-            pdData.append(wScore -lScore)
+            pdData.append(float(wScore -lScore))
 
             #
             # append points scored on lTeam at (lTeam,wTeam) and points score on wTeam at (wTeam,lTeam)
             pfaRow.append(lTeam)
             pfaCol.append(wTeam)
-            pfaData.append(wScore)
+            pfaData.append(float(wScore))
 
             pfaRow.append(wTeam)
             pfaCol.append(lTeam)
-            pfaData.append(lScore)
+            pfaData.append(float(lScore))
 
 
         wlMatrix = coo_matrix((wlData, (wlRow, wlCol)),shape=(numTeams,numTeams))
+        wlMatrix_csr = wlMatrix.tocsr()
+        wlMatrix_norm = normalize_matrix(wlMatrix_csr)
         rowi = wlMatrix.getrow(78)
 
         
@@ -197,7 +199,34 @@ def makeMatrix(teamDict, seasonDict):
     return 
 
 
+def normalize_matrix(matrix):
+    """
+    normalize_matrix accepts a csr sparse matrix and normalizes the
+    rows
 
+    Input:
+        sparse.csr_matrix   matrix
+
+    Return:
+        sparse.csr_matrix   row normalized matrix
+
+    """
+
+    (numRows, numCols) = matrix.shape
+
+    for i in range(0,numRows):
+        row = matrix.getrow(i)
+        rowSum = 0
+        for k in range(len(row.data)):
+            rowSum = rowSum + row.data[k]
+
+        if rowSum != 0:
+            for j in range(matrix.indptr[i],matrix.indptr[i+1]):
+                value = matrix.data[j]
+                value = value / rowSum
+                matrix.data[j] = value
+
+    return matrix
 
 def main():
     """
@@ -209,9 +238,9 @@ def main():
     teamDict = {}
     seasonDict = {}
     
-    teamDict = readTeamList()
-    seasonDict = readSeasonResults()
-    makeMatrix(teamDict, seasonDict)
+    teamDict = read_team_list()
+    seasonDict = read_season_results()
+    make_matrix(teamDict, seasonDict)
     print ('Done!')
 
 
