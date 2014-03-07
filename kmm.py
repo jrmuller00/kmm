@@ -6,6 +6,7 @@ import random
 import tkinter
 import math
 from scipy.sparse import *
+from scipy.sparse.linalg import *
 from scipy import *
 from types import *
 from tkinter import messagebox
@@ -123,9 +124,8 @@ def make_matrix(teamDict, seasonDict):
     Return:
         tuple   (wlDict, pdDict, pfDict, paDict) dictionaries with matricies
     """
-    wlDict = {}
-    pdDict = {}
-    pfaDict = {}    
+    sMatrixDict = {}
+ 
     numTeams = len(teamDict.keys())
 
     seasons = list(seasonDict.keys())
@@ -185,18 +185,24 @@ def make_matrix(teamDict, seasonDict):
         wlMatrix = coo_matrix((wlData, (wlRow, wlCol)),shape=(numTeams,numTeams))
         wlMatrix_csr = wlMatrix.tocsr()
         wlMatrix_norm = normalize_matrix(wlMatrix_csr)
-        rowi = wlMatrix.getrow(78)
-
-        
+               
         pdMatrix = coo_matrix((pdData, (pdRow, pdCol)),shape=(numTeams,numTeams))
+        pdMatrix_csr = pdMatrix.tocsr()
+        pdMatrix_norm = normalize_matrix(pdMatrix_csr)
+
         pfaMatrix = coo_matrix((pfaData, (pfaRow, pfaCol)),shape=(numTeams,numTeams))
-        
+        pfaMatrix_csr = pfaMatrix.tocsr()
+        pfaMatrix_norm = normalize_matrix(pfaMatrix_csr)
 
-        wlDict[season] = wlMatrix
-        pdDict[season] = pdMatrix
-        pfaDict[season] = pfaMatrix
+        alpha1 = 0.5 
+        alpha2 = 0.25
+        alpha3 = 0.25
 
-    return 
+        finalMatrix_csr = alpha1 * wlMatrix_norm + alpha2 * pdMatrix_norm + alpha3 * pfaMatrix_norm
+
+        sMatrixDict[season] = finalMatrix_csr
+
+    return sMatrixDict
 
 
 def normalize_matrix(matrix):
@@ -228,6 +234,10 @@ def normalize_matrix(matrix):
 
     return matrix
 
+
+
+
+
 def main():
     """
     
@@ -237,10 +247,18 @@ def main():
 
     teamDict = {}
     seasonDict = {}
+    sMatrixDict = {}
+    ratingsDict = {}
     
     teamDict = read_team_list()
     seasonDict = read_season_results()
-    make_matrix(teamDict, seasonDict)
+    sMatrixDict = make_matrix(teamDict, seasonDict)
+
+    for key in sMatrixDict.keys():
+        eval, evec = eigs(sMatrixDict[key])
+        ratingsDict[key] = evec
+
+
     print ('Done!')
 
 
