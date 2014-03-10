@@ -9,6 +9,7 @@ from scipy.sparse import *
 from scipy.sparse.linalg import *
 from scipy import *
 from types import *
+import numpy as np
 from tkinter import messagebox
 from tkinter import filedialog
 import csv
@@ -194,9 +195,9 @@ def make_matrix(teamDict, seasonDict):
         pfaMatrix_csr = pfaMatrix.tocsr()
         pfaMatrix_norm = normalize_matrix(pfaMatrix_csr)
 
-        alpha1 = 0.5 
-        alpha2 = 0.25
-        alpha3 = 0.25
+        alpha1 = 0.0
+        alpha2 = 1.0
+        alpha3 = 0.0
 
         finalMatrix_csr = alpha1 * wlMatrix_norm + alpha2 * pdMatrix_norm + alpha3 * pfaMatrix_norm
 
@@ -250,12 +251,14 @@ def main():
     sMatrixDict = {}
     ratingsDict = {}
     
-    teamDict = read_team_list()
-    seasonDict = read_season_results()
+    teamDict = read_team_list('test_teams.csv')
+    seasonDict = read_season_results('test_results.csv')
     sMatrixDict = make_matrix(teamDict, seasonDict)
 
     for key in sMatrixDict.keys():
-        eval, evec = eigs(sMatrixDict[key])
+        dense_Matrix = sMatrixDict[key].todense()
+        #eval, evec = eigs(sMatrixDict[key])
+        evals, evecs = np.linalg.eig(dense_Matrix)
         ratingsDict[key] = evec
 
 
