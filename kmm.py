@@ -10,6 +10,7 @@ from scipy.sparse.linalg import *
 from scipy import *
 from types import *
 import numpy as np
+import scipy as sp
 from tkinter import messagebox
 from tkinter import filedialog
 import csv
@@ -186,14 +187,17 @@ def make_matrix(teamDict, seasonDict):
         wlMatrix = coo_matrix((wlData, (wlRow, wlCol)),shape=(numTeams,numTeams))
         wlMatrix_csr = wlMatrix.tocsr()
         wlMatrix_norm = normalize_matrix(wlMatrix_csr)
+        wlMatrix_norm = check_zero_rows(wlMatrix_norm)
                
         pdMatrix = coo_matrix((pdData, (pdRow, pdCol)),shape=(numTeams,numTeams))
         pdMatrix_csr = pdMatrix.tocsr()
         pdMatrix_norm = normalize_matrix(pdMatrix_csr)
+        pdMatrix_norm = check_zero_rows(pdMatrix_norm)
 
         pfaMatrix = coo_matrix((pfaData, (pfaRow, pfaCol)),shape=(numTeams,numTeams))
         pfaMatrix_csr = pfaMatrix.tocsr()
         pfaMatrix_norm = normalize_matrix(pfaMatrix_csr)
+        pfaMatrix_norm = check_zero_rows(pfaMatrix_norm)
 
         alpha1 = 0.0
         alpha2 = 1.0
@@ -236,6 +240,43 @@ def normalize_matrix(matrix):
     return matrix
 
 
+def  check_zero_rows(csrMatrix):
+    """
+    check_zero_row will check if there is a zero row and 
+    if so add 1/rows to each element in that row
+    """
+
+    (rows,cols) = csrMatrix.shape
+
+    for i in range(rows):
+        if csrMatrix.indptr[i] == csrMatrix.indptr[i+1]:
+            rowData = []
+            colData = []
+            mData = []
+            for k in range(rows):
+                rowData.append(i)
+                colData.append(k)
+                mData.append(1.0/float(rows))
+
+            cooMatrix = coo_matrix((mData, (rowData, colData)),shape=(rows,cols))
+            csrMatrix = csrMatrix + cooMatrix.tocsr()
+
+    return csrMatrix
+
+def get_dominant_eigen(matrix):
+
+    (rows,cols) = matrix.shape
+    domEig = []
+    sum = 0.0
+    for i in range(rows):
+        sum = sum + matrix[i][0]
+        domEig.append(matrix[i][0])
+
+    for i in range(rows):
+        domEig[i] = domEig[i] / sum
+
+
+    return domEig
 
 
 
@@ -257,9 +298,10 @@ def main():
 
     for key in sMatrixDict.keys():
         dense_Matrix = sMatrixDict[key].todense()
-        #eval, evec = eigs(sMatrixDict[key])
-        evals, evecs = np.linalg.eig(dense_Matrix)
-        ratingsDict[key] = evec
+        evalsp, evecsp = eigs(sMatrixDict[key].transpose(),k=3)
+        evals, levecs, revecs = sp.linalg.eig(dense_Matrix,left=True)
+        ratingsDict[key] = get_dominant_eigen(evecsp.real)
+
 
 
     print ('Done!')
@@ -268,3 +310,4 @@ def main():
 
 if __name__ == "__main__":
     main()
+ 
