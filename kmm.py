@@ -199,9 +199,9 @@ def make_matrix(teamDict, seasonDict):
         pfaMatrix_norm = normalize_matrix(pfaMatrix_csr)
         pfaMatrix_norm = check_zero_rows(pfaMatrix_norm)
 
-        alpha1 = 0.0
-        alpha2 = 1.0
-        alpha3 = 0.0
+        alpha1 = 0.4
+        alpha2 = 0.3
+        alpha3 = 0.3
 
         finalMatrix_csr = alpha1 * wlMatrix_norm + alpha2 * pdMatrix_norm + alpha3 * pfaMatrix_norm
 
@@ -263,17 +263,23 @@ def  check_zero_rows(csrMatrix):
 
     return csrMatrix
 
-def get_dominant_eigen(matrix):
+def get_dominant_eigen(eigvals, eigvec):
 
-    (rows,cols) = matrix.shape
+    numEigVals = len(eigvals.real)
+    domIndex = 0
+    for i in range(numEigVals):
+        if math.fabs(1.0 - eigvals.real[i]) < 1e-3:
+            domIndex = i
+
+    (rows,cols) = eigvec.shape
     domEig = []
     sum = 0.0
     for i in range(rows):
-        sum = sum + matrix[i][0]
-        domEig.append(matrix[i][0])
+        sum = sum + eigvec.real[i][domIndex]
+        domEig.append(eigvec.real[i][domIndex])
 
     for i in range(rows):
-        domEig[i] = domEig[i] / sum
+        domEig[i] = math.fabs(domEig[i] / sum)
 
 
     return domEig
@@ -285,22 +291,75 @@ def main():
     
     main is the main function for the kmm program.  
 
+    arguments:
+        -h [filename]   :   help on running the code
+        -t [filename]   :   team names/ids              default is teams.csv
+        -r [filename]   :   regular season results      default is regular_season_results.csv
+        -s [filename]   :   seasons                     default is seasons.csv
+        -l [filename]   :   tourney slots               default is tourney_slots.csv
+        -e [filename]   :   tourney seeds               default is tourney_seeds.csv
+        -o [filename]   :   tourney results             default is tourney_results.csv
+
     """
+    teamsFile = ''
+    regularSeasonResultsFile = ''
+    seasonsFile = ''
+    tourneySlotsFile = ''
+    tourneySeedsFile = ''
+    tourneyResultsFile = ''
+
+
+    try:
+        opts, args = getopt.getopt(sys.argv[1:], "chsf:n:t:r:y:",["help","filename="])
+    except getopt.error as msg:
+        print (msg)
+        print ("for help use --help")
+        sys.exit(2)
+
+    for o, arg in opts:
+#        print (o, arg)
+        if o == "-h":
+            print ("python cmla.py")
+        if o == "-t":
+            teamsFile = arg
+        if o == "-r":
+            regularSeasonResultsFile = arg
+        if o == "-s":
+            seasonsFile = arg
+        if o == "-l":
+            tourneySlotsFile = arg
+        if o == "-e":
+            tourneySeedsFile = arg
+        if o == "-o":
+            tourneyResultsFile = arg
 
     teamDict = {}
     seasonDict = {}
     sMatrixDict = {}
     ratingsDict = {}
+
     
-    teamDict = read_team_list('test_teams.csv')
-    seasonDict = read_season_results('test_results.csv')
+    if teamsFile == '':
+        teamDict = read_team_list()
+    else:
+        teamDict = read_team_list(teamsFile)
+    if regularSeasonResultsFile == '':
+        seasonDict = read_season_results()
+    else:
+        seasonDict = read_season_results(regularSeasonResultsFile)
+
     sMatrixDict = make_matrix(teamDict, seasonDict)
 
     for key in sMatrixDict.keys():
-        dense_Matrix = sMatrixDict[key].todense()
-        evalsp, evecsp = eigs(sMatrixDict[key].transpose(),k=3)
-        evals, levecs, revecs = sp.linalg.eig(dense_Matrix,left=True)
-        ratingsDict[key] = get_dominant_eigen(evecsp.real)
+        #dense_Matrix = sMatrixDict[key].todense()
+        (rows,cols) = sMatrixDict[key].shape
+        if rows <= 6:
+            rank=rows-1
+        else:
+            rank=6
+        evalsp, evecsp = eigs(sMatrixDict[key].transpose(),k=rank)
+        #evals, levecs, revecs = sp.linalg.eig(dense_Matrix,left=True)
+        ratingsDict[key] = get_dominant_eigen(evalsp, evecsp)
 
 
 
