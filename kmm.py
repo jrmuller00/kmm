@@ -108,7 +108,7 @@ def read_season_results(filename = 'regular_season_results.csv'):
     return seasonDict
 
 
-def make_matrix(teamDict, seasonDict):
+def make_matrix(teamDict, seasonDict, alphas):
     """
     function makeMatricies will create sparse matricies based on the data
     in the seasonDict dictionary.  The matricies are as follows:
@@ -131,16 +131,29 @@ def make_matrix(teamDict, seasonDict):
     numTeams = len(teamDict.keys())
 
     seasons = list(seasonDict.keys())
-
+    #
+    # win loss mattrix
     wlRow = []
     wlCol = []
     wlData = []
+
+    #
+    # point difference matrix
     pdRow = []
     pdCol = []
     pdData = []
+
+    #
+    # points for/against matrix
     pfaRow = []
     pfaCol = []
     pfaData = []
+
+    #
+    # close game matrix
+    cgRow = []
+    cgCol = []
+    cgData = []
 
     for season in seasons:
 
@@ -153,6 +166,9 @@ def make_matrix(teamDict, seasonDict):
         pfaRow.clear()
         pfaCol.clear()
         pfaData.clear()
+        cgRow.clear()
+        cgCol.clear()
+        cgData.clear()
 
         results = seasonDict[season]
         for game in results:
@@ -172,6 +188,11 @@ def make_matrix(teamDict, seasonDict):
             pdRow.append(lTeam)
             pdCol.append(wTeam)
             pdData.append(float(wScore -lScore))
+
+            if wScore - lScore < 5:
+                cgRow.append(lTeam)
+                cgCol.append(wTeam)
+                cgData.append(1.0)
 
             #
             # append points scored on lTeam at (lTeam,wTeam) and points score on wTeam at (wTeam,lTeam)
@@ -199,11 +220,13 @@ def make_matrix(teamDict, seasonDict):
         pfaMatrix_norm = normalize_matrix(pfaMatrix_csr)
         pfaMatrix_norm = check_zero_rows(pfaMatrix_norm)
 
-        alpha1 = 0.4
-        alpha2 = 0.3
-        alpha3 = 0.3
+        cgMatrix = coo_matrix((cgData, (cgRow, cgCol)),shape=(numTeams,numTeams))
+        cgMatrix_csr = cgMatrix.tocsr()
+        cgMatrix_norm = normalize_matrix(cgMatrix_csr)
+        cgMatrix_norm = check_zero_rows(cgMatrix_norm)
 
-        finalMatrix_csr = alpha1 * wlMatrix_norm + alpha2 * pdMatrix_norm + alpha3 * pfaMatrix_norm
+
+        finalMatrix_csr = alphas[0] * wlMatrix_norm + alphas[1] * pdMatrix_norm + alphas[2] * pfaMatrix_norm + alphas[3] * cgMatrix_norm
 
         sMatrixDict[season] = finalMatrix_csr
 
@@ -307,10 +330,11 @@ def main():
     tourneySlotsFile = ''
     tourneySeedsFile = ''
     tourneyResultsFile = ''
+    alphaList = []
 
 
     try:
-        opts, args = getopt.getopt(sys.argv[1:], "chsf:n:t:r:y:",["help","filename="])
+        opts, args = getopt.getopt(sys.argv[1:], "a:chsf:n:t:r:y:",["help","filename="])
     except getopt.error as msg:
         print (msg)
         print ("for help use --help")
@@ -332,11 +356,28 @@ def main():
             tourneySeedsFile = arg
         if o == "-o":
             tourneyResultsFile = arg
+        if o == "-a":
+            tokens = arg.split(',')
+            for alpha in tokens:
+                alphaList.append(float(alpha))
+            #
+            # check for sum to 1.0
+            sum = 0.0
+            for alpha in alphaList:
+                sum = alpha + sum
 
+            if math.fabs(1.0 - sum) > 1e-4:
+                print ('alpha list does not sum to 1.0, please try again')
+                sys.exit(2)
+
+
+    if len(alphaList) == 0:
+        alphaList = [0.75,0.125,0.125,0.0,0.0]
     teamDict = {}
     seasonDict = {}
     sMatrixDict = {}
     ratingsDict = {}
+    standingsDict = {}
 
     
     if teamsFile == '':
@@ -348,18 +389,27 @@ def main():
     else:
         seasonDict = read_season_results(regularSeasonResultsFile)
 
-    sMatrixDict = make_matrix(teamDict, seasonDict)
+    sMatrixDict = make_matrix(teamDict, seasonDict, alphaList)
 
     for key in sMatrixDict.keys():
         #dense_Matrix = sMatrixDict[key].todense()
         (rows,cols) = sMatrixDict[key].shape
         if rows <= 6:
-            rank=rows-1
+            rank=rows-2
         else:
             rank=6
         evalsp, evecsp = eigs(sMatrixDict[key].transpose(),k=rank)
         #evals, levecs, revecs = sp.linalg.eig(dense_Matrix,left=True)
         ratingsDict[key] = get_dominant_eigen(evalsp, evecsp)
+        standingsList = []
+        for team in teamDict.keys():
+            teamIndex = teamDict[team].getIndex()
+            standingsList.append((teamDict[team].getName(),1000*ratingsDict[key][teamIndex]))
+
+        standingsList = sorted(standingsList, key=lambda listitem: listitem[1],reverse=True)
+        standingsDict[key] = standingsList
+
+            
 
 
 
