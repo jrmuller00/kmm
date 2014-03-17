@@ -360,11 +360,6 @@ def compare_ratings(tourneyresults, teamDict):
         print ('Season: ' + str(season) + ' Correct %: ' + str(100.0 * numRight / totGames))
     return
 
-        
-
-
-
-
 
 def main():
     """
@@ -388,10 +383,12 @@ def main():
     tourneySeedsFile = ''
     tourneyResultsFile = ''
     alphaList = []
+    numAlphas = 1
+    alphaSteps = 1
 
 
     try:
-        opts, args = getopt.getopt(sys.argv[1:], "a:chsf:n:t:r:y:",["help","filename="])
+        opts, args = getopt.getopt(sys.argv[1:], "a:e:f:hl:o:r:st:y:",["help","filename="])
     except getopt.error as msg:
         print (msg)
         print ("for help use --help")
@@ -399,20 +396,6 @@ def main():
 
     for o, arg in opts:
 #        print (o, arg)
-        if o == "-h":
-            print ("python cmla.py")
-        if o == "-t":
-            teamsFile = arg
-        if o == "-r":
-            regularSeasonResultsFile = arg
-        if o == "-s":
-            seasonsFile = arg
-        if o == "-l":
-            tourneySlotsFile = arg
-        if o == "-e":
-            tourneySeedsFile = arg
-        if o == "-o":
-            tourneyResultsFile = arg
         if o == "-a":
             tokens = arg.split(',')
             for alpha in tokens:
@@ -426,6 +409,31 @@ def main():
             if math.fabs(1.0 - sum) > 1e-4:
                 print ('alpha list does not sum to 1.0, please try again')
                 sys.exit(2)
+        if o == "-e":
+            tourneySeedsFile = arg
+        if o == "-f":
+            alphaSteps = int(arg)
+            if alphaSteps > 2:
+                delAlpha = 1.0 / (alphaSteps - 1)
+                numAlphas = 5
+            else:
+                print('Need more alpha steps')
+                sys.exit(2)
+
+        if o == "-h":
+            print ("python kmm.py")
+        if o == "-l":
+            tourneySlotsFile = arg
+        if o == "-o":
+            tourneyResultsFile = arg
+        if o == "-r":
+            regularSeasonResultsFile = arg
+        if o == "-s":
+            seasonsFile = arg
+        if o == "-t":
+            teamsFile = arg
+
+
 
 
     if len(alphaList) == 0:
@@ -447,31 +455,42 @@ def main():
     else:
         seasonDict = read_season_results(regularSeasonResultsFile)
 
-    sMatrixDict = make_matrix(teamDict, seasonDict, alphaList)
+    
 
-    for key in sMatrixDict.keys():
-        #dense_Matrix = sMatrixDict[key].todense()
-        (rows,cols) = sMatrixDict[key].shape
-        if rows <= 6:
-            rank=rows-2
-        else:
-            rank=6
-        evalsp, evecsp = eigs(sMatrixDict[key].transpose(),k=rank)
-        #evals, levecs, revecs = sp.linalg.eig(dense_Matrix,left=True)
-        ratingsDict[key] = get_dominant_eigen(evalsp, evecsp)
-        standingsList = []
-        for team in teamDict.keys():
-            teamIndex = teamDict[team].get_index()
-            standingsList.append((teamDict[team].get_name(),1000*ratingsDict[key][teamIndex]))
-            teamDict[team].set_SI(key,1000*ratingsDict[key][teamIndex])
+    for i in range(numAlphas):
+        if numAlphas > 1:
+            alphaList[i] = 0.0
+        for j in range(alphaSteps):
+            if numAlphas > 1:
+                sum = 1.0 - alphaList[i]
+                for k in range(numAlphas):
+                    if k != i:
+                        alphaList[k] = sum / (numAlphas - 1.0)
+            sMatrixDict = make_matrix(teamDict, seasonDict, alphaList)
+            for key in sMatrixDict.keys():
+                #dense_Matrix = sMatrixDict[key].todense()
+                (rows,cols) = sMatrixDict[key].shape
+                if rows <= 6:
+                    rank=rows-2
+                else:
+                    rank=6
+                evalsp, evecsp = eigs(sMatrixDict[key].transpose(),k=rank)
+                #evals, levecs, revecs = sp.linalg.eig(dense_Matrix,left=True)
+                ratingsDict[key] = get_dominant_eigen(evalsp, evecsp)
+                standingsList = []
+                for team in teamDict.keys():
+                    teamIndex = teamDict[team].get_index()
+                    standingsList.append((teamDict[team].get_name(),1000*ratingsDict[key][teamIndex]))
+                    teamDict[team].set_SI(key,1000*ratingsDict[key][teamIndex])
 
-        standingsList = sorted(standingsList, key=lambda listitem: listitem[1],reverse=True)
-        standingsDict[key] = standingsList
-        
-
-
-    tourneyDict = read_season_results('tourney_results.csv')
-    compare_ratings(tourneyDict, teamDict)
+                standingsList = sorted(standingsList, key=lambda listitem: listitem[1],reverse=True)
+                standingsDict[key] = standingsList
+            tourneyDict = read_season_results('tourney_results.csv')
+            for k in range(numAlphas):
+                print('alpha[' + str(k) + '] = ' + str(alphaList[k]) + '  ')
+            print ('\n')
+            compare_ratings(tourneyDict, teamDict)
+            alphaList[i] = alphaList[i] + delAlpha
     print ('Done!')
 
 

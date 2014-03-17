@@ -71,7 +71,8 @@ class team(object):
         try:
             self.seasonSummaryDict[season].set_SI(si)
         except Exception:
-            print ('No season ' + str(season) + ' key for ' + self.name)
+            pass
+            #print ('No season ' + str(season) + ' key for ' + self.name)
         return
 
     def get_wins(self, season):
