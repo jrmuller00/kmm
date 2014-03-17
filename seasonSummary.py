@@ -28,7 +28,7 @@ class seasonSummary(object):
         self.oppList = []
         return
 
-    def addGame(self, pf, pa, oppID):
+    def add_game(self, pf, pa, oppID):
         """
         function addGame will add the game info to the object
 
@@ -62,7 +62,7 @@ class seasonSummary(object):
             self.si = self.winPercent
         
         keyList = list(self.opponents.keys())
-        if oppid in keyList:
+        if oppID in keyList:
             self.opponents[oppID].append(game)
         else:
             self.opponents[oppID] = []
@@ -70,25 +70,25 @@ class seasonSummary(object):
 
         return
 
-    def getWins(self):
+    def get_wins(self):
         return self.wins
 
-    def getLosses(self):
+    def get_losses(self):
         return self.losses
 
-    def getPF(self):
+    def get_PF(self):
         return self.tpf
 
-    def getPA(self):
+    def get_PA(self):
         return self.tpa
 
-    def getPD(self):
+    def get_PD(self):
         return self.pd
 
-    def getSI(self):
+    def get_SI(self):
         return self.si
 
-    def setSI(self, si):
+    def set_SI(self, si):
         """
         function setSI will set the value for the 
         strength index based on the user supplied value si
@@ -102,3 +102,24 @@ class seasonSummary(object):
         self.si = si
 
         return
+
+    def get_last_n_games(self, n):
+        #
+        # first check if n > # games
+        # if yes return entire season,
+        # otherwise retuurn games
+        # as tuples ([ 0| 1], oppID)
+
+        totGames = self.wins + self.losses
+        gameList = []
+        if n > totGames:
+            n = totGames
+
+        for i in range(totGames - n, totGames):
+            gameList.append((self.recordList[i],self.oppList[i]))
+
+        return gameList
+
+
+
+

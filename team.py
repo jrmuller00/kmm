@@ -8,21 +8,7 @@ class team(object):
     tournament summary dictionary
     """
 
-    def __init__(self):
-        self.id = 0
-        self.name = ""
-
-
-        self.index = -1
-        self.seasonSummaryDict = {}
-        self.tournamentSummaryDict = {}
-        return
-
-    def __init__(self, id, name):
-        self.id = id
-        self.name = name
-
-    def __init__(self, id, name, index):
+    def __init__(self,id=0,name="",index=-1):
         self.id = id
         self.name = name
         self.index = index
@@ -30,28 +16,28 @@ class team(object):
         self.tournamentSummaryDict = {}
         return
 
-    def setID(self):
+    def set_ID(self):
         self.id = id
         return
 
-    def getID(self):
+    def get_ID(self):
         return self.id
 
-    def setName(self, name):
+    def set_name(self, name):
         self.name = name
         return
 
-    def getName(self):
+    def get_name(self):
         return self.name
 
-    def set_Index(self, index):
+    def set_index(self, index):
         self.index = index
         return
 
-    def getIndex(self):
+    def get_index(self):
         return self.index
 
-    def addSeasonGame(self, season, pf, pa, oppID):
+    def add_season_game(self, season, pf, pa, oppID):
         """
         add information about a season game
        
@@ -71,34 +57,43 @@ class team(object):
             #
             # already have a seasonSummary object in the list
             # append game info to this object
-            self.seasonSummaryDict[season].addGame(pf,pa,oppID)
+            self.seasonSummaryDict[season].add_game(pf,pa,oppID)
         else:
-            seaSum = seasonSummary()
-            seaSum.addGame(pf,pa,oppID)
-            seasonSummaryDict[season] = seaSum
+            seaSum = seasonSummary.seasonSummary()
+            seaSum.add_game(pf,pa,oppID)
+            self.seasonSummaryDict[season] = seaSum
         return
 
-    def getSI(self, season):
-        return self.seasonSummaryDict[season].getSI()
+    def get_SI(self, season):
+        return self.seasonSummaryDict[season].get_SI()
 
-    def setSI(self, season, si):
-        self.seasonSummaryDict[season].setSI(si)
+    def set_SI(self, season, si):
+        try:
+            self.seasonSummaryDict[season].set_SI(si)
+        except Exception:
+            print ('No season ' + str(season) + ' key for ' + self.name)
         return
 
-    def getWins(self, season):
-        return self.seasonSummaryDict[season].getWins()
+    def get_wins(self, season):
+        return self.seasonSummaryDict[season].get_wins()
 
-    def getLosses(self, season):
-        return self.seasonSummaryDict[season].getLosses()
+    def get_losses(self, season):
+        return self.seasonSummaryDict[season].get_losses()
 
-    def getPF(self, season):
-        return self.seasonSummaryDict[season].getPF()
+    def get_PF(self, season):
+        return self.seasonSummaryDict[season].get_PF()
 
-    def getPA(self, season):
-        return self.seasonSummaryDict[season].getPA()
+    def get_PA(self, season):
+        return self.seasonSummaryDict[season].get_PA()
 
-    def getPD(self, season):
-        return self.seasonSummaryDict[season].getPD()
+    def get_PD(self, season):
+        return self.seasonSummaryDict[season].get_PD()
+
+    def get_last_n_games(self,season,n):
+        try:
+            return self.seasonSummaryDict[season].get_last_n_games(n)
+        except Exception:
+            return []
 
 
 

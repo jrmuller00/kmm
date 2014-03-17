@@ -108,7 +108,7 @@ def read_season_results(filename = 'regular_season_results.csv'):
     return seasonDict
 
 
-def make_matrix(teamDict, seasonDict, alphas):
+def make_matrix(teamDict, seasonDict, alphas, ntrend=5):
     """
     function makeMatricies will create sparse matricies based on the data
     in the seasonDict dictionary.  The matricies are as follows:
@@ -172,10 +172,18 @@ def make_matrix(teamDict, seasonDict, alphas):
 
         results = seasonDict[season]
         for game in results:
-            wTeam = teamDict[int(game[2])].getIndex()
+            wTeamID = int(game[2])
+            lTeamID = int(game[4])
+            wTeam = teamDict[wTeamID].get_index()
             wScore = int(game[3])
-            lTeam = teamDict[int(game[4])].getIndex()
+            lTeam = teamDict[lTeamID].get_index()
             lScore = int(game[5])
+
+            #
+            # add game info to team obects
+
+            teamDict[wTeamID].add_season_game(season,wScore,lScore,lTeamID)
+            teamDict[lTeamID].add_season_game(season,lScore,wScore,wTeamID)
 
             #
             # append 1 to (lTeam,wteam)
@@ -204,6 +212,24 @@ def make_matrix(teamDict, seasonDict, alphas):
             pfaCol.append(lTeam)
             pfaData.append(float(lScore))
 
+        #
+        # now get the last n gmae trend for the teams
+        
+        #
+        # close game matrix
+        trendRow = []
+        trendCol = []
+        trendData = []
+        trendList = []
+        for team in teamDict:
+            trendList = teamDict[team].get_last_n_games(season, ntrend)
+            
+            for gameTuple in trendList:
+                (wl, oppID) = gameTuple
+                if wl == 0:
+                    trendRow.append(teamDict[team].get_index())
+                    trendCol.append(teamDict[oppID].get_index())
+                    trendData.append(1.0)
 
         wlMatrix = coo_matrix((wlData, (wlRow, wlCol)),shape=(numTeams,numTeams))
         wlMatrix_csr = wlMatrix.tocsr()
@@ -225,8 +251,16 @@ def make_matrix(teamDict, seasonDict, alphas):
         cgMatrix_norm = normalize_matrix(cgMatrix_csr)
         cgMatrix_norm = check_zero_rows(cgMatrix_norm)
 
+        trendMatrix = coo_matrix((trendData, (trendRow, trendCol)),shape=(numTeams,numTeams))
+        trendMatrix_csr = trendMatrix.tocsr()
+        trendMatrix_norm = normalize_matrix(trendMatrix_csr)
+        trendMatrix_norm = check_zero_rows(trendMatrix_norm)    
 
-        finalMatrix_csr = alphas[0] * wlMatrix_norm + alphas[1] * pdMatrix_norm + alphas[2] * pfaMatrix_norm + alphas[3] * cgMatrix_norm
+
+
+        finalMatrix_csr = alphas[0] * wlMatrix_norm + alphas[1] * pdMatrix_norm \
+            + alphas[2] * pfaMatrix_norm + alphas[3] * cgMatrix_norm \
+            + alphas[4] * trendMatrix_norm
 
         sMatrixDict[season] = finalMatrix_csr
 
@@ -307,6 +341,29 @@ def get_dominant_eigen(eigvals, eigvec):
 
     return domEig
 
+def compare_ratings(tourneyresults, teamDict):
+
+    seasonPredictions = {}
+
+    for season in tourneyresults.keys():
+        results = tourneyresults[season]
+        totGames = 0
+        numRight = 0
+        for game in results:
+            wTeamID = int(game[2])
+            lTeamID = int(game[4])
+            wTeam = teamDict[wTeamID].get_index()
+            lTeam = teamDict[lTeamID].get_index()
+            if teamDict[wTeamID].get_SI(season) > teamDict[lTeamID].get_SI(season):
+                numRight = numRight + 1
+            totGames = totGames + 1
+        print ('Season: ' + str(season) + ' Correct %: ' + str(100.0 * numRight / totGames))
+    return
+
+        
+
+
+
 
 
 def main():
@@ -378,6 +435,7 @@ def main():
     sMatrixDict = {}
     ratingsDict = {}
     standingsDict = {}
+    tourneyDict = {}
 
     
     if teamsFile == '':
@@ -403,16 +461,17 @@ def main():
         ratingsDict[key] = get_dominant_eigen(evalsp, evecsp)
         standingsList = []
         for team in teamDict.keys():
-            teamIndex = teamDict[team].getIndex()
-            standingsList.append((teamDict[team].getName(),1000*ratingsDict[key][teamIndex]))
+            teamIndex = teamDict[team].get_index()
+            standingsList.append((teamDict[team].get_name(),1000*ratingsDict[key][teamIndex]))
+            teamDict[team].set_SI(key,1000*ratingsDict[key][teamIndex])
 
         standingsList = sorted(standingsList, key=lambda listitem: listitem[1],reverse=True)
         standingsDict[key] = standingsList
-
-            
-
+        
 
 
+    tourneyDict = read_season_results('tourney_results.csv')
+    compare_ratings(tourneyDict, teamDict)
     print ('Done!')
 
 
