@@ -96,6 +96,22 @@ class team(object):
         except Exception:
             return []
 
+    def set_season_index(self, season, index):
+        self.seasonSummaryDict[season].set_index(index)
+        return
+
+    def get_season_index(self, season):
+        try:
+            return self.seasonSummaryDict[season].get_index()
+        except Exception:
+            return -1
+
+    def get_tot_season_games(self,season):
+        try:
+            return self.seasonSummaryDict[season].get_tot_games()
+        except Exception:
+            return 0
+
 
 
         

@@ -15,6 +15,7 @@ class seasonSummary(object):
         float   winPercent  - team winning percentage
         """
 
+        self.index = -1
         self.opponents = {}
         self.wins = 0
         self.losses = 0 
@@ -119,6 +120,17 @@ class seasonSummary(object):
             gameList.append((self.recordList[i],self.oppList[i]))
 
         return gameList
+
+    def set_index(self, index):
+        self.index = index
+        return
+
+    def get_index(self):
+        return self.index
+
+    def get_tot_games(self):
+        return self.wins + self.losses
+
 
 
 

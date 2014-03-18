@@ -170,6 +170,13 @@ def make_matrix(teamDict, seasonDict, alphas, ntrend=5):
         cgCol.clear()
         cgData.clear()
 
+        #
+        # load data to season summary objects
+        # this is used to find teams that did not
+        # play in the current season
+
+        results = seasonDict[season]
+
         results = seasonDict[season]
         for game in results:
             wTeamID = int(game[2])
@@ -177,6 +184,30 @@ def make_matrix(teamDict, seasonDict, alphas, ntrend=5):
             wTeam = teamDict[wTeamID].get_index()
             wScore = int(game[3])
             lTeam = teamDict[lTeamID].get_index()
+            lScore = int(game[5])
+
+            #
+            # add game info to team obects
+
+            teamDict[wTeamID].add_season_game(season,wScore,lScore,lTeamID)
+            teamDict[lTeamID].add_season_game(season,lScore,wScore,wTeamID)
+
+        #
+        # now loop thru teams and set matrix index
+        index = 0
+        for team in teamDict.keys():
+            if teamDict[team].get_tot_season_games(season) > 0:
+                teamDict[team].set_season_index(season,index)
+                index = index + 1
+
+        numSeasonTeams = index
+
+        for game in results:
+            wTeamID = int(game[2])
+            lTeamID = int(game[4])
+            wTeam = teamDict[wTeamID].get_season_index(season)
+            wScore = int(game[3])
+            lTeam = teamDict[lTeamID].get_season_index(season)
             lScore = int(game[5])
 
             #
@@ -227,31 +258,31 @@ def make_matrix(teamDict, seasonDict, alphas, ntrend=5):
             for gameTuple in trendList:
                 (wl, oppID) = gameTuple
                 if wl == 0:
-                    trendRow.append(teamDict[team].get_index())
-                    trendCol.append(teamDict[oppID].get_index())
+                    trendRow.append(teamDict[team].get_season_index(season))
+                    trendCol.append(teamDict[oppID].get_season_index(season))
                     trendData.append(1.0)
 
-        wlMatrix = coo_matrix((wlData, (wlRow, wlCol)),shape=(numTeams,numTeams))
+        wlMatrix = coo_matrix((wlData, (wlRow, wlCol)),shape=(numSeasonTeams,numSeasonTeams))
         wlMatrix_csr = wlMatrix.tocsr()
         wlMatrix_norm = normalize_matrix(wlMatrix_csr)
         wlMatrix_norm = check_zero_rows(wlMatrix_norm)
                
-        pdMatrix = coo_matrix((pdData, (pdRow, pdCol)),shape=(numTeams,numTeams))
+        pdMatrix = coo_matrix((pdData, (pdRow, pdCol)),shape=(numSeasonTeams,numSeasonTeams))
         pdMatrix_csr = pdMatrix.tocsr()
         pdMatrix_norm = normalize_matrix(pdMatrix_csr)
         pdMatrix_norm = check_zero_rows(pdMatrix_norm)
 
-        pfaMatrix = coo_matrix((pfaData, (pfaRow, pfaCol)),shape=(numTeams,numTeams))
+        pfaMatrix = coo_matrix((pfaData, (pfaRow, pfaCol)),shape=(numSeasonTeams,numSeasonTeams))
         pfaMatrix_csr = pfaMatrix.tocsr()
         pfaMatrix_norm = normalize_matrix(pfaMatrix_csr)
         pfaMatrix_norm = check_zero_rows(pfaMatrix_norm)
 
-        cgMatrix = coo_matrix((cgData, (cgRow, cgCol)),shape=(numTeams,numTeams))
+        cgMatrix = coo_matrix((cgData, (cgRow, cgCol)),shape=(numSeasonTeams,numSeasonTeams))
         cgMatrix_csr = cgMatrix.tocsr()
         cgMatrix_norm = normalize_matrix(cgMatrix_csr)
         cgMatrix_norm = check_zero_rows(cgMatrix_norm)
 
-        trendMatrix = coo_matrix((trendData, (trendRow, trendCol)),shape=(numTeams,numTeams))
+        trendMatrix = coo_matrix((trendData, (trendRow, trendCol)),shape=(numSeasonTeams,numSeasonTeams))
         trendMatrix_csr = trendMatrix.tocsr()
         trendMatrix_norm = normalize_matrix(trendMatrix_csr)
         trendMatrix_norm = check_zero_rows(trendMatrix_norm)    
@@ -352,8 +383,8 @@ def compare_ratings(tourneyresults, teamDict):
         for game in results:
             wTeamID = int(game[2])
             lTeamID = int(game[4])
-            wTeam = teamDict[wTeamID].get_index()
-            lTeam = teamDict[lTeamID].get_index()
+            wTeam = teamDict[wTeamID].get_season_index(season)
+            lTeam = teamDict[lTeamID].get_season_index(season)
             if teamDict[wTeamID].get_SI(season) > teamDict[lTeamID].get_SI(season):
                 numRight = numRight + 1
             totGames = totGames + 1
@@ -385,6 +416,7 @@ def main():
     alphaList = []
     numAlphas = 1
     alphaSteps = 1
+    delAlpha = 0.0
 
 
     try:
@@ -479,9 +511,10 @@ def main():
                 ratingsDict[key] = get_dominant_eigen(evalsp, evecsp)
                 standingsList = []
                 for team in teamDict.keys():
-                    teamIndex = teamDict[team].get_index()
-                    standingsList.append((teamDict[team].get_name(),1000*ratingsDict[key][teamIndex]))
-                    teamDict[team].set_SI(key,1000*ratingsDict[key][teamIndex])
+                    teamIndex = teamDict[team].get_season_index(key)
+                    if teamIndex >= 0:
+                        standingsList.append((teamDict[team].get_name(),1000*ratingsDict[key][teamIndex]))
+                        teamDict[team].set_SI(key,1000*ratingsDict[key][teamIndex])
 
                 standingsList = sorted(standingsList, key=lambda listitem: listitem[1],reverse=True)
                 standingsDict[key] = standingsList
