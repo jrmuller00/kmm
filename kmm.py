@@ -108,7 +108,7 @@ def read_season_results(filename = 'regular_season_results.csv'):
     return seasonDict
 
 
-def make_matrix(teamDict, seasonDict, alphas, ntrend=5):
+def make_matrix(teamDict, seasonDict, alphas, ntrend=5, pdMax=100):
     """
     function makeMatricies will create sparse matricies based on the data
     in the seasonDict dictionary.  The matricies are as follows:
@@ -155,6 +155,12 @@ def make_matrix(teamDict, seasonDict, alphas, ntrend=5):
     cgCol = []
     cgData = []
 
+    #
+    # away game wins matrix
+    agRow = []
+    agCol = []
+    agData = []
+
     for season in seasons:
 
         wlRow.clear()
@@ -169,6 +175,9 @@ def make_matrix(teamDict, seasonDict, alphas, ntrend=5):
         cgRow.clear()
         cgCol.clear()
         cgData.clear()
+        agRow.clear()
+        agCol.clear()
+        agData.clear()
 
         #
         # load data to season summary objects
@@ -209,6 +218,8 @@ def make_matrix(teamDict, seasonDict, alphas, ntrend=5):
             wScore = int(game[3])
             lTeam = teamDict[lTeamID].get_season_index(season)
             lScore = int(game[5])
+            wloc = game[6]
+
 
             #
             # add game info to team obects
@@ -226,7 +237,11 @@ def make_matrix(teamDict, seasonDict, alphas, ntrend=5):
             # append point difference for at (lTeam,wTeam) 
             pdRow.append(lTeam)
             pdCol.append(wTeam)
-            pdData.append(float(wScore -lScore))
+            pd = wScore - lScore
+            if pd > pdMax:
+                pdData.append(float(pdMax))
+            else:
+                pdData.append(float(pd))
 
             if wScore - lScore < 5:
                 cgRow.append(lTeam)
@@ -243,8 +258,14 @@ def make_matrix(teamDict, seasonDict, alphas, ntrend=5):
             pfaCol.append(lTeam)
             pfaData.append(float(lScore))
 
+            if wloc != 'H':
+                # winning team won on away or neutral site
+                agRow.append(lTeam)
+                agCol.append(wTeam)
+                agData.append(1.0)
+
         #
-        # now get the last n gmae trend for the teams
+        # now get the last n game trend for the teams
         
         #
         # close game matrix
@@ -285,13 +306,17 @@ def make_matrix(teamDict, seasonDict, alphas, ntrend=5):
         trendMatrix = coo_matrix((trendData, (trendRow, trendCol)),shape=(numSeasonTeams,numSeasonTeams))
         trendMatrix_csr = trendMatrix.tocsr()
         trendMatrix_norm = normalize_matrix(trendMatrix_csr)
-        trendMatrix_norm = check_zero_rows(trendMatrix_norm)    
+        trendMatrix_norm = check_zero_rows(trendMatrix_norm)
 
+        agMatrix = coo_matrix((agData, (agRow, agCol)),shape=(numSeasonTeams,numSeasonTeams))
+        agMatrix_csr = agMatrix.tocsr()
+        agMatrix_norm = normalize_matrix(agMatrix_csr)
+        agMatrix_norm = check_zero_rows(agMatrix_norm)
 
 
         finalMatrix_csr = alphas[0] * wlMatrix_norm + alphas[1] * pdMatrix_norm \
             + alphas[2] * pfaMatrix_norm + alphas[3] * cgMatrix_norm \
-            + alphas[4] * trendMatrix_norm
+            + alphas[4] * trendMatrix_norm + alphas[5] * agMatrix_norm
 
         sMatrixDict[season] = finalMatrix_csr
 
@@ -405,6 +430,7 @@ def main():
     arguments:
         -a [list of alphas]     :   list of alphas to use for calculations
         -b [list of seasons]    :   list of seasons to calculate ratings only and bypass results comparison
+        -d maxDP                :   max point differential to consider
         -e [filename]           :   tourney seeds               default is tourney_seeds.csv
         -f [alphaSteps]         :   number of alpha steps for simulation
         -h                      :   help on running the code
@@ -425,11 +451,12 @@ def main():
     numAlphas = 1
     alphaSteps = 1
     delAlpha = 0.0
+    maxDP = 100
     skipList = []
     writeAlphaData = False
 
     try:
-        opts, args = getopt.getopt(sys.argv[1:], "a:b:e:f:hl:o:r:st:y:",["help","filename="])
+        opts, args = getopt.getopt(sys.argv[1:], "a:b:d:e:f:hl:o:r:st:y:",["help","filename="])
     except getopt.error as msg:
         print (msg)
         print ("for help use --help")
@@ -454,6 +481,8 @@ def main():
             tokens = arg.split(',')
             for skip in tokens:
                 skipList.append(skip)
+        if o == '-d':
+            maxDP = int(arg)
 
         if o == "-e":
             tourneySeedsFile = arg
@@ -485,7 +514,7 @@ def main():
 
 
     if len(alphaList) == 0:
-        alphaList = [0.75,0.125,0.125,0.0,0.0]
+        alphaList = [0.2,0.2,0.45,0.05,0.05,0.05]
     teamDict = {}
     seasonDict = {}
     sMatrixDict = {}
@@ -514,7 +543,7 @@ def main():
                 for k in range(numAlphas):
                     if k != i:
                         alphaList[k] = sum / (numAlphas - 1.0)
-            sMatrixDict = make_matrix(teamDict, seasonDict, alphaList)
+            sMatrixDict = make_matrix(teamDict, seasonDict, alphaList, maxDP)
             for key in sMatrixDict.keys():
                 #dense_Matrix = sMatrixDict[key].todense()
                 (rows,cols) = sMatrixDict[key].shape
