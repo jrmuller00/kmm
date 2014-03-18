@@ -406,7 +406,8 @@ def compare_ratings(tourneyresults, teamDict, skiplist):
     wRating = []
     lRating = []
     tRating = []
-    for season in tourneyresults.keys():
+    seasons = sorted(list(tourneyresults.keys()))
+    for season in seasons:
         if season not in (skiplist):
             results = tourneyresults[season]
             totGames = 0
