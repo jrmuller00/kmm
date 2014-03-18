@@ -130,7 +130,7 @@ def make_matrix(teamDict, seasonDict, alphas, ntrend=5, pdMax=100):
  
     numTeams = len(teamDict.keys())
 
-    seasons = list(seasonDict.keys())
+    seasons = sorted(list(seasonDict.keys()))
     #
     # win loss mattrix
     wlRow = []
@@ -161,6 +161,7 @@ def make_matrix(teamDict, seasonDict, alphas, ntrend=5, pdMax=100):
     agCol = []
     agData = []
 
+    
     for season in seasons:
 
         wlRow.clear()
@@ -402,6 +403,9 @@ def compare_ratings(tourneyresults, teamDict, skiplist):
     seasonPredictions = {}
     sum = 0.0
     count = 0
+    wRating = []
+    lRating = []
+    tRating = []
     for season in tourneyresults.keys():
         if season not in (skiplist):
             results = tourneyresults[season]
@@ -412,14 +416,22 @@ def compare_ratings(tourneyresults, teamDict, skiplist):
                 lTeamID = int(game[4])
                 wTeam = teamDict[wTeamID].get_season_index(season)
                 lTeam = teamDict[lTeamID].get_season_index(season)
-                if teamDict[wTeamID].get_SI(season) > teamDict[lTeamID].get_SI(season):
+                teamRatingDiff = teamDict[wTeamID].get_SI(season) - teamDict[lTeamID].get_SI(season)
+
+                if teamRatingDiff > 0:
                     numRight = numRight + 1
+                    wRating.append(teamRatingDiff)
+                else:
+                    lRating.append(teamRatingDiff)
+                tRating.append(teamRatingDiff)
                 totGames = totGames + 1
             print ('Season: ' + str(season) + ' Correct %: ' + str(100.0 * numRight / totGames))
             sum = sum + (numRight / totGames)
             count = count + 1
 
-    return sum / count
+    print('{0: >6.5e} {1: >6.5e} {2: >6.5e} {3: >6.5e} {4: >6.5e} {5: >6.5e}\n'.format(np.std(tRating), np.mean(tRating), np.std(wRating), np.mean(wRating), np.std(lRating), np.mean(lRating)))
+
+    return (sum/count, np.std(tRating), np.mean(tRating), np.std(wRating), np.mean(wRating), np.std(lRating), np.mean(lRating))
 
 
 def main():
@@ -490,7 +502,7 @@ def main():
             alphaSteps = int(arg)
             if alphaSteps > 2:
                 delAlpha = 1.0 / (alphaSteps - 1)
-                numAlphas = 5
+                numAlphas = 6
                 alphaFile = open('alphadata.txt',mode='w')
                 writeAlphaData = True
             else:
@@ -567,11 +579,11 @@ def main():
             for k in range(numAlphas):
                 print('alpha[' + str(k) + '] = ' + str(alphaList[k]) + '  ')
             print ('\n')
-            overallScore = compare_ratings(tourneyDict, teamDict, skipList)
+            (overallScore, tstd, tmean, wstd, wmean,lstd,lmean) = compare_ratings(tourneyDict, teamDict, skipList)
             if writeAlphaData == True:
                 for k in range(numAlphas):
                     alphaFile.write('{0: >6.5e} '.format(alphaList[k]))
-                alphaFile.write('{0: >6.5e}\n'.format(overallScore))
+                alphaFile.write('{0: >6.5e} {1: >6.5e} {2: >6.5e} {3: >6.5e} {4: >6.5e} {5: >6.5e} {6: >6.5e}\n'.format(overallScore,tstd, tmean, wstd, wmean,lstd,lmean))
             alphaList[i] = alphaList[i] + delAlpha
     print ('Done!')
 
