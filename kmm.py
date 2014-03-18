@@ -372,24 +372,29 @@ def get_dominant_eigen(eigvals, eigvec):
 
     return domEig
 
-def compare_ratings(tourneyresults, teamDict):
+def compare_ratings(tourneyresults, teamDict, skiplist):
 
     seasonPredictions = {}
-
+    sum = 0.0
+    count = 0
     for season in tourneyresults.keys():
-        results = tourneyresults[season]
-        totGames = 0
-        numRight = 0
-        for game in results:
-            wTeamID = int(game[2])
-            lTeamID = int(game[4])
-            wTeam = teamDict[wTeamID].get_season_index(season)
-            lTeam = teamDict[lTeamID].get_season_index(season)
-            if teamDict[wTeamID].get_SI(season) > teamDict[lTeamID].get_SI(season):
-                numRight = numRight + 1
-            totGames = totGames + 1
-        print ('Season: ' + str(season) + ' Correct %: ' + str(100.0 * numRight / totGames))
-    return
+        if season not in (skiplist):
+            results = tourneyresults[season]
+            totGames = 0
+            numRight = 0
+            for game in results:
+                wTeamID = int(game[2])
+                lTeamID = int(game[4])
+                wTeam = teamDict[wTeamID].get_season_index(season)
+                lTeam = teamDict[lTeamID].get_season_index(season)
+                if teamDict[wTeamID].get_SI(season) > teamDict[lTeamID].get_SI(season):
+                    numRight = numRight + 1
+                totGames = totGames + 1
+            print ('Season: ' + str(season) + ' Correct %: ' + str(100.0 * numRight / totGames))
+            sum = sum + (numRight / totGames)
+            count = count + 1
+
+    return sum / count
 
 
 def main():
@@ -398,14 +403,17 @@ def main():
     main is the main function for the kmm program.  
 
     arguments:
-        -h [filename]   :   help on running the code
-        -t [filename]   :   team names/ids              default is teams.csv
-        -r [filename]   :   regular season results      default is regular_season_results.csv
-        -s [filename]   :   seasons                     default is seasons.csv
-        -l [filename]   :   tourney slots               default is tourney_slots.csv
-        -e [filename]   :   tourney seeds               default is tourney_seeds.csv
-        -o [filename]   :   tourney results             default is tourney_results.csv
-
+        -a [list of alphas]     :   list of alphas to use for calculations
+        -b [list of seasons]    :   list of seasons to calculate ratings only and bypass results comparison
+        -e [filename]           :   tourney seeds               default is tourney_seeds.csv
+        -f [alphaSteps]         :   number of alpha steps for simulation
+        -h                      :   help on running the code
+        -l [filename]           :   tourney slots               default is tourney_slots.csv
+        -o [filename]           :   tourney results             default is tourney_results.csv
+        -r [filename]           :   regular season results      default is regular_season_results.csv
+        -s [filename]           :   seasons                     default is seasons.csv
+        -t [filename]           :   team names/ids              default is teams.csv
+  
     """
     teamsFile = ''
     regularSeasonResultsFile = ''
@@ -417,10 +425,11 @@ def main():
     numAlphas = 1
     alphaSteps = 1
     delAlpha = 0.0
-
+    skipList = []
+    writeAlphaData = False
 
     try:
-        opts, args = getopt.getopt(sys.argv[1:], "a:e:f:hl:o:r:st:y:",["help","filename="])
+        opts, args = getopt.getopt(sys.argv[1:], "a:b:e:f:hl:o:r:st:y:",["help","filename="])
     except getopt.error as msg:
         print (msg)
         print ("for help use --help")
@@ -441,6 +450,11 @@ def main():
             if math.fabs(1.0 - sum) > 1e-4:
                 print ('alpha list does not sum to 1.0, please try again')
                 sys.exit(2)
+        if o == '-b':
+            tokens = arg.split(',')
+            for skip in tokens:
+                skipList.append(skip)
+
         if o == "-e":
             tourneySeedsFile = arg
         if o == "-f":
@@ -448,6 +462,8 @@ def main():
             if alphaSteps > 2:
                 delAlpha = 1.0 / (alphaSteps - 1)
                 numAlphas = 5
+                alphaFile = open('alphadata.txt',mode='w')
+                writeAlphaData = True
             else:
                 print('Need more alpha steps')
                 sys.exit(2)
@@ -522,7 +538,11 @@ def main():
             for k in range(numAlphas):
                 print('alpha[' + str(k) + '] = ' + str(alphaList[k]) + '  ')
             print ('\n')
-            compare_ratings(tourneyDict, teamDict)
+            overallScore = compare_ratings(tourneyDict, teamDict, skipList)
+            if writeAlphaData == True:
+                for k in range(numAlphas):
+                    alphaFile.write('{0: >6.5e} '.format(alphaList[k]))
+                alphaFile.write('{0: >6.5e}\n'.format(overallScore))
             alphaList[i] = alphaList[i] + delAlpha
     print ('Done!')
 
