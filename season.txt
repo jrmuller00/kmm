@@ -1,0 +1,294 @@
+ 708.000000                 North Carolina 5.59232e+00
+ 786.000000                       Syracuse 5.52346e+00
+ 577.000000                           Duke 5.42436e+00
+ 731.000000                     Pittsburgh 5.01627e+00
+ 676.000000                       Missouri 4.96407e+00
+ 651.000000                     Louisville 4.95890e+00
+ 840.000000                     Washington 4.88503e+00
+ 843.000000                  West Virginia 4.87173e+00
+ 636.000000                         Kansas 4.85803e+00
+ 829.000000                      Villanova 4.85133e+00
+ 559.000000                    Connecticut 4.79008e+00
+ 790.000000                      Tennessee 4.70309e+00
+ 721.000000                       Oklahoma 4.70222e+00
+ 722.000000                    Oklahoma St 4.70142e+00
+ 660.000000                      Marquette 4.66579e+00
+ 810.000000                           UCLA 4.65690e+00
+ 839.000000                    Wake Forest 4.63830e+00
+ 671.000000                    Michigan St 4.59582e+00
+ 666.000000                        Memphis 4.58106e+00
+ 738.000000                         Purdue 4.44891e+00
+ 662.000000                       Maryland 4.44102e+00
+ 512.000000                     Arizona St 4.43690e+00
+ 521.000000                         Baylor 4.43162e+00
+ 595.000000                     Florida St 4.43069e+00
+ 551.000000                        Clemson 4.42520e+00
+ 539.000000                     California 4.41425e+00
+ 527.000000                 Boston College 4.41372e+00
+ 793.000000                          Texas 4.38777e+00
+ 717.000000                     Notre Dame 4.35120e+00
+ 511.000000                        Arizona 4.33011e+00
+ 737.000000                     Providence 4.30069e+00
+ 818.000000                            USC 4.23349e+00
+ 675.000000                 Mississippi St 4.17134e+00
+ 603.000000                     Georgetown 4.12994e+00
+ 853.000000                         Xavier 4.12166e+00
+ 796.000000                     Texas Tech 4.11140e+00
+ 592.000000                        Florida 4.05199e+00
+ 536.000000                            BYU 4.05168e+00
+ 655.000000                            LSU 4.04958e+00
+ 821.000000                           Utah 4.04827e+00
+ 607.000000                        Gonzaga 4.03453e+00
+ 623.000000                       Illinois 4.03009e+00
+ 640.000000                       Kentucky 4.02277e+00
+ 831.000000                  Virginia Tech 4.01965e+00
+ 670.000000                       Michigan 3.99458e+00
+ 720.000000                        Ohio St 3.98929e+00
+ 783.000000                       Stanford 3.94716e+00
+ 794.000000                      Texas A&M 3.91720e+00
+ 578.000000                       Duquesne 3.85633e+00
+ 637.000000                      Kansas St 3.85006e+00
+ 766.000000                          Siena 3.83219e+00
+ 701.000000                     New Mexico 3.81944e+00
+ 673.000000                      Minnesota 3.80442e+00
+ 741.000000                   Rhode Island 3.80321e+00
+ 764.000000                     Seton Hall 3.78424e+00
+ 562.000000                      Creighton 3.77553e+00
+ 789.000000                         Temple 3.76230e+00
+ 668.000000                       Miami FL 3.74776e+00
+ 805.000000                            UAB 3.73667e+00
+ 518.000000                         Auburn 3.73160e+00
+ 549.000000                     Cincinnati 3.72442e+00
+ 704.000000                        Niagara 3.67418e+00
+ 674.000000                    Mississippi 3.66309e+00
+ 617.000000                        Houston 3.64839e+00
+ 824.000000                           UTEP 3.64001e+00
+ 606.000000                   Georgia Tech 3.63757e+00
+ 769.000000                 South Carolina 3.63370e+00
+ 849.000000                      Wisconsin 3.62803e+00
+ 729.000000                        Penn St 3.61199e+00
+ 725.000000                         Oregon 3.59010e+00
+ 695.000000                       NC State 3.57021e+00
+ 624.000000                    Illinois St 3.56880e+00
+ 817.000000                           UNLV 3.55872e+00
+ 778.000000                      St John's 3.54584e+00
+ 569.000000                         Dayton 3.51115e+00
+ 822.000000                        Utah St 3.50831e+00
+ 827.000000                     Vanderbilt 3.49586e+00
+ 754.000000                   San Diego St 3.49051e+00
+ 802.000000                          Tulsa 3.47766e+00
+ 825.000000                VA Commonwealth 3.47652e+00
+ 714.000000                  Northern Iowa 3.44458e+00
+ 504.000000                        Alabama 3.41937e+00
+ 841.000000                  Washington St 3.40165e+00
+ 573.000000                         DePaul 3.39901e+00
+ 568.000000                       Davidson 3.39230e+00
+ 515.000000                       Arkansas 3.39187e+00
+ 715.000000                   Northwestern 3.34817e+00
+ 830.000000                       Virginia 3.34800e+00
+ 702.000000                  New Mexico St 3.34756e+00
+ 781.000000                   St Mary's CA 3.33381e+00
+ 844.000000                   WI Green Bay 3.30000e+00
+ 699.000000                         Nevada 3.29248e+00
+ 628.000000                           Iowa 3.27440e+00
+ 852.000000                        Wyoming 3.26332e+00
+ 535.000000                         Butler 3.26109e+00
+ 718.000000                        Oakland 3.24620e+00
+ 554.000000                 Col Charleston 3.23947e+00
+ 629.000000                        Iowa St 3.23817e+00
+ 552.000000                   Cleveland St 3.23071e+00
+ 779.000000                 St Joseph's PA 3.22481e+00
+ 641.000000                       La Salle 3.20842e+00
+ 743.000000                       Richmond 3.20821e+00
+ 698.000000                       Nebraska 3.19656e+00
+ 835.000000                     W Kentucky 3.15084e+00
+ 746.000000                        Rutgers 3.14311e+00
+ 530.000000                        Bradley 3.13758e+00
+ 663.000000                  Massachusetts 3.12434e+00
+ 689.000000                    N Dakota St 3.11179e+00
+ 546.000000                      Charlotte 3.10652e+00
+ 732.000000                       Portland 3.08170e+00
+ 733.000000                    Portland St 3.06834e+00
+ 604.000000                        Georgia 3.06710e+00
+ 503.000000                          Akron 3.06195e+00
+ 771.000000                  South Florida 3.05706e+00
+ 547.000000                    Chattanooga 3.05325e+00
+ 557.000000                    Colorado St 3.03371e+00
+ 586.000000                           ETSU 3.03275e+00
+ 828.000000                        Vermont 3.03219e+00
+ 846.000000                     Wichita St 3.02035e+00
+ 597.000000                      Fresno St 3.02021e+00
+ 832.000000                            VMI 3.01519e+00
+ 809.000000                            UCF 2.99490e+00
+ 745.000000                  Robert Morris 2.98788e+00
+ 635.000000                  James Madison 2.98418e+00
+ 526.000000                       Boise St 2.96337e+00
+ 625.000000                        Indiana 2.96080e+00
+ 711.000000                    North Texas 2.95678e+00
+ 851.000000                      Wright St 2.91785e+00
+ 639.000000                           Kent 2.91096e+00
+ 575.000000                          Drake 2.90911e+00
+ 602.000000                   George Mason 2.90647e+00
+ 633.000000                   Jacksonville 2.89815e+00
+ 726.000000                      Oregon St 2.89373e+00
+ 744.000000                          Rider 2.88491e+00
+ 816.000000                 UNC Wilmington 2.88397e+00
+ 647.000000                  Long Beach St 2.87357e+00
+ 800.000000                           Troy 2.87237e+00
+ 534.000000                        Buffalo 2.87018e+00
+ 772.000000                  Southern Miss 2.86820e+00
+ 522.000000                        Belmont 2.86739e+00
+ 565.000000                  CS Northridge 2.86350e+00
+ 589.000000                      Fairfield 2.86160e+00
+ 587.000000                     Evansville 2.86006e+00
+ 724.000000                   Oral Roberts 2.85439e+00
+ 845.000000                   WI Milwaukee 2.85184e+00
+ 788.000000                            TCU 2.85032e+00
+ 564.000000                   CS Fullerton 2.84550e+00
+ 758.000000                    Santa Clara 2.84486e+00
+ 661.000000                       Marshall 2.84235e+00
+ 556.000000                       Colorado 2.83818e+00
+ 806.000000                       UC Davis 2.81856e+00
+ 626.000000                     Indiana St 2.81000e+00
+ 742.000000                           Rice 2.80932e+00
+ 749.000000                     S Illinois 2.80849e+00
+ 622.000000                     IL Chicago 2.80299e+00
+ 799.000000                         Towson 2.80014e+00
+ 667.000000                         Mercer 2.79561e+00
+ 682.000000                    Morehead St 2.78649e+00
+ 775.000000                 St Bonaventure 2.78173e+00
+ 780.000000                       St Louis 2.77846e+00
+ 842.000000                       Weber St 2.77085e+00
+ 621.000000                       Idaho St 2.76584e+00
+ 548.000000                     Chicago St 2.76251e+00
+ 519.000000                    Austin Peay 2.75948e+00
+ 570.000000                       Delaware 2.75636e+00
+ 719.000000                           Ohio 2.75460e+00
+ 653.000000                      Loyola MD 2.74593e+00
+ 768.000000                  South Alabama 2.73444e+00
+ 723.000000                   Old Dominion 2.73274e+00
+ 620.000000                          Idaho 2.72675e+00
+ 659.000000                         Marist 2.72353e+00
+ 669.000000                       Miami OH 2.71903e+00
+ 740.000000                        Radford 2.70770e+00
+ 712.000000                   Northeastern 2.69845e+00
+ 561.000000                        Cornell 2.69769e+00
+ 632.000000                     Jackson St 2.68212e+00
+ 797.000000                      TN Martin 2.67847e+00
+ 615.000000                        Hofstra 2.67625e+00
+ 678.000000                    Missouri St 2.67389e+00
+ 583.000000                  East Carolina 2.65818e+00
+ 727.000000                        Pacific 2.65780e+00
+ 688.000000                     N Colorado 2.65595e+00
+ 801.000000                         Tulane 2.65154e+00
+ 787.000000                 TAM C. Christi 2.64857e+00
+ 683.000000                      Morgan St 2.63947e+00
+ 672.000000                 Middle Tenn St 2.63534e+00
+ 654.000000                 Loyola-Chicago 2.62465e+00
+ 686.000000                   Mt St Mary's 2.62444e+00
+ 513.000000                Ark Little Rock 2.62363e+00
+ 645.000000                        Liberty 2.62275e+00
+ 750.000000                   Sacred Heart 2.62238e+00
+ 650.000000                 Louisiana Tech 2.61749e+00
+ 748.000000                    S Dakota St 2.60964e+00
+ 510.000000                 Appalachian St 2.60277e+00
+ 753.000000                      San Diego 2.58957e+00
+ 646.000000                       Lipscomb 2.58383e+00
+ 767.000000                            SMU 2.58150e+00
+ 524.000000                     Binghamton 2.57383e+00
+ 819.000000                   UT Arlington 2.55897e+00
+ 681.000000                     Montana St 2.55651e+00
+ 599.000000                   G Washington 2.55527e+00
+ 757.000000                  Santa Barbara 2.54560e+00
+ 528.000000                    Boston Univ 2.54081e+00
+ 807.000000                      UC Irvine 2.53174e+00
+ 755.000000                  San Francisco 2.51776e+00
+ 541.000000                       Canisius 2.51285e+00
+ 820.000000                 UT San Antonio 2.51262e+00
+ 529.000000                  Bowling Green 2.50785e+00
+ 687.000000                      Murray St 2.50634e+00
+ 616.000000                     Holy Cross 2.50475e+00
+ 613.000000                         Hawaii 2.49809e+00
+ 550.000000                        Citadel 2.49385e+00
+ 833.000000                     W Carolina 2.49306e+00
+ 543.000000                      Centenary 2.49248e+00
+ 627.000000                           Iona 2.48777e+00
+ 509.000000                  American Univ 2.48362e+00
+ 590.000000                    FL Atlantic 2.48317e+00
+ 814.000000                  UNC Asheville 2.47509e+00
+ 751.000000                 Sam Houston St 2.46821e+00
+ 826.000000                     Valparaiso 2.45654e+00
+ 813.000000                           UMBC 2.44692e+00
+ 594.000000                   Florida Intl 2.44652e+00
+ 692.000000                           Navy 2.44616e+00
+ 756.000000                    San Jose St 2.44335e+00
+ 730.000000                     Pepperdine 2.44059e+00
+ 507.000000                      Albany NY 2.43660e+00
+ 855.000000                  Youngstown St 2.43484e+00
+ 600.000000                    Ga Southern 2.43043e+00
+ 677.000000                    Missouri KC 2.42508e+00
+ 795.000000                       Texas St 2.42495e+00
+ 576.000000                         Drexel 2.41296e+00
+ 658.000000                      Manhattan 2.40620e+00
+ 618.000000                    Houston Bap 2.39822e+00
+ 580.000000                     E Kentucky 2.37596e+00
+ 630.000000                           IPFW 2.37523e+00
+ 611.000000                       Hartford 2.37291e+00
+ 560.000000                      Coppin St 2.36640e+00
+ 601.000000                   Gardner Webb 2.36214e+00
+ 850.000000                        Wofford 2.35636e+00
+ 792.000000                 Tennessee Tech 2.35045e+00
+ 680.000000                        Montana 2.33409e+00
+ 811.000000                            ULL 2.33360e+00
+ 774.000000                  Southern Utah 2.32838e+00
+ 643.000000                          Lamar 2.32413e+00
+ 537.000000                     C Michigan 2.31400e+00
+ 582.000000                   E Washington 2.31390e+00
+ 648.000000                    Long Island 2.30113e+00
+ 791.000000                   Tennessee St 2.30107e+00
+ 836.000000                     W Michigan 2.29913e+00
+ 765.000000                      SF Austin 2.29489e+00
+ 605.000000                     Georgia St 2.29434e+00
+ 804.000000                    TX Southern 2.29193e+00
+ 652.000000                  Loy Marymount 2.28887e+00
+ 502.000000                      Air Force 2.28224e+00
+ 685.000000                   MS Valley St 2.28025e+00
+ 798.000000                         Toledo 2.27807e+00
+ 533.000000                       Bucknell 2.27789e+00
+ 563.000000                 CS Bakersfield 2.27679e+00
+ 591.000000                  FL Gulf Coast 2.27000e+00
+ 585.000000                           Elon 2.25999e+00
+ 540.000000                       Campbell 2.25756e+00
+ 596.000000                        Fordham 2.25756e+00
+ 784.000000                        Stetson 2.25591e+00
+ 572.000000                         Denver 2.25151e+00
+ 506.000000                     Alabama St 2.24069e+00
+ 707.000000                     Norfolk St 2.23111e+00
+ 728.000000                           Penn 2.22859e+00
+ 544.000000                   Central Conn 2.22284e+00
+ 739.000000                     Quinnipiac 2.22191e+00
+ 538.000000                   Cal Poly SLO 2.21866e+00
+ 716.000000                Northwestern LA 2.20714e+00
+ 690.000000                     N Illinois 2.20168e+00
+ 642.000000                      Lafayette 2.19571e+00
+ 847.000000                 William & Mary 2.19021e+00
+ 520.000000                        Ball St 2.18566e+00
+ 514.000000                 Ark Pine Bluff 2.18513e+00
+ 574.000000                        Detroit 2.17323e+00
+ 838.000000                         Wagner 2.17234e+00
+ 812.000000                            ULM 2.17019e+00
+ 776.000000                  St Francis NY 2.16260e+00
+ 760.000000                     SC Upstate 2.15827e+00
+ 785.000000                    Stony Brook 2.15385e+00
+ 588.000000                    F Dickinson 2.15178e+00
+ 734.000000                   Prairie View 2.15168e+00
+ 679.000000                    Monmouth NJ 2.15013e+00
+ 631.000000                          IUPUI 2.14880e+00
+ 612.000000                        Harvard 2.14770e+00
+ 735.000000                   Presbyterian 2.14582e+00
+ 657.000000                          Maine 2.14524e+00
+ 762.000000                 SE Missouri St 2.14499e+00
+ 782.000000                     St Peter's 2.14460e+00
+ 649.000000                       Longwood 2.14183e+00
+ 705.000000                    Nicholls St 2.14014e+00
+ 593.000000                    Florida A&M 2.13319e+00

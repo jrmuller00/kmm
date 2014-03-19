@@ -1,0 +1,342 @@
+ 708                 North Carolina 6.00358e+00
+ 577                           Duke 5.72206e+00
+ 790                      Tennessee 5.68176e+00
+ 636                         Kansas 5.32278e+00
+ 793                          Texas 5.28428e+00
+ 666                        Memphis 5.02333e+00
+ 810                           UCLA 4.97922e+00
+ 731                     Pittsburgh 4.82388e+00
+ 551                        Clemson 4.75890e+00
+ 827                     Vanderbilt 4.64906e+00
+ 853                         Xavier 4.62973e+00
+ 660                      Marquette 4.55409e+00
+ 515                       Arkansas 4.48103e+00
+ 843                  West Virginia 4.43112e+00
+ 786                       Syracuse 4.42912e+00
+ 559                    Connecticut 4.41322e+00
+ 794                      Texas A&M 4.41143e+00
+ 511                        Arizona 4.40236e+00
+ 637                      Kansas St 4.39190e+00
+ 717                     Notre Dame 4.38169e+00
+ 651                     Louisville 4.35541e+00
+ 606                   Georgia Tech 4.32132e+00
+ 671                    Michigan St 4.31162e+00
+ 676                       Missouri 4.30630e+00
+ 818                            USC 4.29895e+00
+ 783                       Stanford 4.28583e+00
+ 603                     Georgetown 4.22008e+00
+ 625                        Indiana 4.20238e+00
+ 849                      Wisconsin 4.18944e+00
+ 674                    Mississippi 4.18112e+00
+ 725                         Oregon 4.17689e+00
+ 521                         Baylor 4.16804e+00
+ 662                       Maryland 4.15609e+00
+ 595                     Florida St 4.15505e+00
+ 539                     California 4.15356e+00
+ 840                     Washington 4.15272e+00
+ 721                       Oklahoma 4.11198e+00
+ 829                      Villanova 4.04736e+00
+ 789                         Temple 4.02708e+00
+ 592                        Florida 4.02609e+00
+ 504                        Alabama 4.02591e+00
+ 779                 St Joseph's PA 4.02071e+00
+ 663                  Massachusetts 4.01590e+00
+ 668                       Miami FL 3.99990e+00
+ 675                 Mississippi St 3.97824e+00
+ 623                       Illinois 3.94234e+00
+ 841                  Washington St 3.91841e+00
+ 741                   Rhode Island 3.91354e+00
+ 607                        Gonzaga 3.90469e+00
+ 536                            BYU 3.90225e+00
+ 738                         Purdue 3.89825e+00
+ 764                     Seton Hall 3.89237e+00
+ 737                     Providence 3.87017e+00
+ 722                    Oklahoma St 3.86235e+00
+ 575                          Drake 3.85623e+00
+ 831                  Virginia Tech 3.81788e+00
+ 720                        Ohio St 3.81164e+00
+ 546                      Charlotte 3.80924e+00
+ 839                    Wake Forest 3.80510e+00
+ 702                  New Mexico St 3.76985e+00
+ 639                           Kent 3.76966e+00
+ 796                     Texas Tech 3.76420e+00
+ 830                       Virginia 3.75050e+00
+ 769                 South Carolina 3.74547e+00
+ 527                 Boston College 3.74391e+00
+ 530                        Bradley 3.71104e+00
+ 604                        Georgia 3.67003e+00
+ 512                     Arizona St 3.65688e+00
+ 578                       Duquesne 3.63478e+00
+ 817                           UNLV 3.62014e+00
+ 640                       Kentucky 3.60391e+00
+ 673                      Minnesota 3.59905e+00
+ 701                     New Mexico 3.59883e+00
+ 569                         Dayton 3.58475e+00
+ 695                       NC State 3.56864e+00
+ 805                            UAB 3.56357e+00
+ 535                         Butler 3.55428e+00
+ 562                      Creighton 3.54474e+00
+ 573                         DePaul 3.52736e+00
+ 781                   St Mary's CA 3.52595e+00
+ 568                       Davidson 3.49594e+00
+ 766                          Siena 3.48728e+00
+ 824                           UTEP 3.48201e+00
+ 698                       Nebraska 3.48146e+00
+ 624                    Illinois St 3.47300e+00
+ 617                        Houston 3.46513e+00
+ 678                    Missouri St 3.46339e+00
+ 749                     S Illinois 3.46254e+00
+ 526                       Boise St 3.41616e+00
+ 549                     Cincinnati 3.40797e+00
+ 802                          Tulsa 3.40108e+00
+ 602                   George Mason 3.39108e+00
+ 503                          Akron 3.37629e+00
+ 835                     W Kentucky 3.34662e+00
+ 768                  South Alabama 3.33758e+00
+ 771                  South Florida 3.33317e+00
+ 822                        Utah St 3.31769e+00
+ 655                            LSU 3.31204e+00
+ 641                       La Salle 3.30906e+00
+ 518                         Auburn 3.30296e+00
+ 670                       Michigan 3.28983e+00
+ 564                   CS Fullerton 3.28839e+00
+ 826                     Valparaiso 3.28498e+00
+ 809                            UCF 3.25848e+00
+ 629                        Iowa St 3.25208e+00
+ 669                       Miami OH 3.24995e+00
+ 744                          Rider 3.24415e+00
+ 729                        Penn St 3.23888e+00
+ 699                         Nevada 3.21980e+00
+ 836                     W Michigan 3.18742e+00
+ 719                           Ohio 3.18201e+00
+ 556                       Colorado 3.15302e+00
+ 821                           Utah 3.15073e+00
+ 522                        Belmont 3.14816e+00
+ 552                   Cleveland St 3.13506e+00
+ 753                      San Diego 3.11317e+00
+ 816                 UNC Wilmington 3.11264e+00
+ 519                    Austin Peay 3.10528e+00
+ 754                   San Diego St 3.09943e+00
+ 622                     IL Chicago 3.08432e+00
+ 724                   Oral Roberts 3.07727e+00
+ 653                      Loyola MD 3.07036e+00
+ 554                 Col Charleston 3.05536e+00
+ 631                          IUPUI 3.04506e+00
+ 626                     Indiana St 3.02884e+00
+ 723                   Old Dominion 3.02752e+00
+ 659                         Marist 3.01718e+00
+ 745                  Robert Morris 3.00866e+00
+ 825                VA Commonwealth 2.99875e+00
+ 586                           ETSU 2.99270e+00
+ 718                        Oakland 2.98739e+00
+ 778                      St John's 2.98706e+00
+ 746                        Rutgers 2.97916e+00
+ 714                  Northern Iowa 2.97272e+00
+ 815                 UNC Greensboro 2.95301e+00
+ 772                  Southern Miss 2.95204e+00
+ 813                           UMBC 2.92551e+00
+ 807                      UC Irvine 2.92318e+00
+ 780                       St Louis 2.91867e+00
+ 672                 Middle Tenn St 2.91738e+00
+ 846                     Wichita St 2.91486e+00
+ 844                   WI Green Bay 2.91172e+00
+ 590                    FL Atlantic 2.90828e+00
+ 733                    Portland St 2.90351e+00
+ 743                       Richmond 2.89994e+00
+ 601                   Gardner Webb 2.89784e+00
+ 801                         Tulane 2.88916e+00
+ 600                    Ga Southern 2.88657e+00
+ 730                     Pepperdine 2.88511e+00
+ 565                  CS Northridge 2.86712e+00
+ 704                        Niagara 2.86631e+00
+ 611                       Hartford 2.86139e+00
+ 547                    Chattanooga 2.84036e+00
+ 848                       Winthrop 2.83364e+00
+ 851                      Wright St 2.82379e+00
+ 537                     C Michigan 2.80096e+00
+ 628                           Iowa 2.79104e+00
+ 757                  Santa Barbara 2.79027e+00
+ 726                      Oregon St 2.77980e+00
+ 711                    North Texas 2.77391e+00
+ 845                   WI Milwaukee 2.76766e+00
+ 510                 Appalachian St 2.76410e+00
+ 534                        Buffalo 2.75580e+00
+ 713               Northern Arizona 2.74955e+00
+ 716                Northwestern LA 2.74081e+00
+ 703                    New Orleans 2.74055e+00
+ 727                        Pacific 2.73902e+00
+ 581                     E Michigan 2.73538e+00
+ 750                   Sacred Heart 2.73212e+00
+ 775                 St Bonaventure 2.71823e+00
+ 686                   Mt St Mary's 2.71470e+00
+ 635                  James Madison 2.71082e+00
+ 642                      Lafayette 2.68517e+00
+ 661                       Marshall 2.68430e+00
+ 715                   Northwestern 2.68350e+00
+ 800                           Troy 2.67827e+00
+ 597                      Fresno St 2.67188e+00
+ 788                            TCU 2.67057e+00
+ 613                         Hawaii 2.66749e+00
+ 814                  UNC Asheville 2.66213e+00
+ 797                      TN Martin 2.66186e+00
+ 596                        Fordham 2.65385e+00
+ 712                   Northeastern 2.65289e+00
+ 509                  American Univ 2.63689e+00
+ 852                        Wyoming 2.63255e+00
+ 529                  Bowling Green 2.62021e+00
+ 627                           Iona 2.61572e+00
+ 756                    San Jose St 2.60872e+00
+ 692                           Navy 2.60542e+00
+ 791                   Tennessee St 2.59945e+00
+ 557                    Colorado St 2.59864e+00
+ 828                        Vermont 2.59721e+00
+ 677                    Missouri KC 2.59006e+00
+ 589                      Fairfield 2.58100e+00
+ 819                   UT Arlington 2.57310e+00
+ 847                 William & Mary 2.56578e+00
+ 838                         Wagner 2.56561e+00
+ 798                         Toledo 2.56429e+00
+ 630                           IPFW 2.56262e+00
+ 543                      Centenary 2.55768e+00
+ 689                    N Dakota St 2.55748e+00
+ 643                          Lamar 2.54322e+00
+ 555                        Colgate 2.54164e+00
+ 633                   Jacksonville 2.53002e+00
+ 570                       Delaware 2.52787e+00
+ 795                       Texas St 2.52651e+00
+ 658                      Manhattan 2.52164e+00
+ 632                     Jackson St 2.51010e+00
+ 799                         Towson 2.50820e+00
+ 755                  San Francisco 2.50549e+00
+ 583                  East Carolina 2.50539e+00
+ 728                           Penn 2.50184e+00
+ 587                     Evansville 2.50087e+00
+ 599                   G Washington 2.49914e+00
+ 576                         Drexel 2.49138e+00
+ 615                        Hofstra 2.49125e+00
+ 646                       Lipscomb 2.48582e+00
+ 561                        Cornell 2.47252e+00
+ 690                     N Illinois 2.46921e+00
+ 739                     Quinnipiac 2.46711e+00
+ 667                         Mercer 2.45734e+00
+ 683                      Morgan St 2.45675e+00
+ 648                    Long Island 2.45593e+00
+ 507                      Albany NY 2.45367e+00
+ 774                  Southern Utah 2.45191e+00
+ 585                           Elon 2.44907e+00
+ 705                    Nicholls St 2.44703e+00
+ 855                  Youngstown St 2.43562e+00
+ 762                 SE Missouri St 2.43498e+00
+ 812                            ULM 2.43118e+00
+ 792                 Tennessee Tech 2.42881e+00
+ 811                            ULL 2.42836e+00
+ 544                   Central Conn 2.42365e+00
+ 687                      Murray St 2.41936e+00
+ 751                 Sam Houston St 2.41483e+00
+ 747                  S Carolina St 2.41148e+00
+ 533                       Bucknell 2.40442e+00
+ 681                     Montana St 2.39995e+00
+ 767                            SMU 2.39444e+00
+ 652                  Loy Marymount 2.38873e+00
+ 758                    Santa Clara 2.38691e+00
+ 612                        Harvard 2.38425e+00
+ 531                          Brown 2.38111e+00
+ 832                            VMI 2.36818e+00
+ 787                 TAM C. Christi 2.36762e+00
+ 654                 Loyola-Chicago 2.36386e+00
+ 610                        Hampton 2.35778e+00
+ 850                        Wofford 2.35404e+00
+ 645                        Liberty 2.34931e+00
+ 765                      SF Austin 2.34845e+00
+ 732                       Portland 2.34287e+00
+ 560                      Coppin St 2.33990e+00
+ 516                    Arkansas St 2.33301e+00
+ 833                     W Carolina 2.33174e+00
+ 782                     St Peter's 2.32880e+00
+ 513                Ark Little Rock 2.32704e+00
+ 528                    Boston Univ 2.32695e+00
+ 520                        Ball St 2.32238e+00
+ 616                     Holy Cross 2.32154e+00
+ 591                  FL Gulf Coast 2.31639e+00
+ 834                     W Illinois 2.31605e+00
+ 524                     Binghamton 2.30920e+00
+ 680                        Montana 2.30455e+00
+ 574                        Detroit 2.30068e+00
+ 541                       Canisius 2.29721e+00
+ 594                   Florida Intl 2.28855e+00
+ 502                      Air Force 2.28189e+00
+ 538                   Cal Poly SLO 2.28174e+00
+ 742                           Rice 2.27332e+00
+ 548                     Chicago St 2.27231e+00
+ 647                  Long Beach St 2.27095e+00
+ 784                        Stetson 2.26993e+00
+ 740                        Radford 2.26727e+00
+ 842                       Weber St 2.26510e+00
+ 605                     Georgia St 2.24963e+00
+ 540                       Campbell 2.24781e+00
+ 854                           Yale 2.23738e+00
+ 707                     Norfolk St 2.22919e+00
+ 588                    F Dickinson 2.21555e+00
+ 688                     N Colorado 2.21401e+00
+ 598                         Furman 2.20767e+00
+ 693                         NC A&T 2.18545e+00
+ 563                 CS Bakersfield 2.17951e+00
+ 748                    S Dakota St 2.17558e+00
+ 593                    Florida A&M 2.17517e+00
+ 582                   E Washington 2.16675e+00
+ 806                       UC Davis 2.16454e+00
+ 638                       Kennesaw 2.16117e+00
+ 804                    TX Southern 2.15252e+00
+ 620                          Idaho 2.14652e+00
+ 621                       Idaho St 2.14552e+00
+ 776                  St Francis NY 2.14119e+00
+ 614                     High Point 2.13999e+00
+ 823                    Utah Valley 2.12483e+00
+ 644                         Lehigh 2.10769e+00
+ 803                TX Pan American 2.10530e+00
+ 808                   UC Riverside 2.10093e+00
+ 650                 Louisiana Tech 2.10082e+00
+ 545                  Charleston So 2.08433e+00
+ 700                  New Hampshire 2.07872e+00
+ 760                     SC Upstate 2.07745e+00
+ 572                         Denver 2.06542e+00
+ 679                    Monmouth NJ 2.06226e+00
+ 657                          Maine 2.05900e+00
+ 664                     McNeese St 2.05120e+00
+ 517                           Army 2.04852e+00
+ 761                   SE Louisiana 2.04029e+00
+ 734                   Prairie View 2.03481e+00
+ 649                       Longwood 2.03265e+00
+ 777                  St Francis PA 2.01276e+00
+ 665                     MD E Shore 2.00895e+00
+ 558                       Columbia 2.00894e+00
+ 580                     E Kentucky 2.00661e+00
+ 682                    Morehead St 2.00436e+00
+ 619                         Howard 1.98974e+00
+ 785                    Stony Brook 1.98782e+00
+ 820                 UT San Antonio 1.98773e+00
+ 506                     Alabama St 1.98760e+00
+ 685                   MS Valley St 1.96244e+00
+ 508                      Alcorn St 1.95104e+00
+ 566                  CS Sacramento 1.94847e+00
+ 735                   Presbyterian 1.93997e+00
+ 634                Jacksonville St 1.93873e+00
+ 553                    Coastal Car 1.92551e+00
+ 571                    Delaware St 1.92189e+00
+ 542                  Cent Arkansas 1.91245e+00
+ 550                        Citadel 1.88352e+00
+ 694                     NC Central 1.86900e+00
+ 837                     W Salem St 1.85782e+00
+ 710                  North Florida 1.84302e+00
+ 567                      Dartmouth 1.84184e+00
+ 759                    Savannah St 1.82435e+00
+ 752                        Samford 1.82274e+00
+ 579                     E Illinois 1.82120e+00
+ 736                      Princeton 1.81195e+00
+ 773                  Southern Univ 1.78078e+00
+ 514                 Ark Pine Bluff 1.72492e+00
+ 706                           NJIT 1.72166e+00
+ 523                Bethune-Cookman 1.71162e+00
+ 505                    Alabama A&M 1.66251e+00
+ 608                      Grambling 1.56375e+00
+ 618                    Houston Bap 8.46157e-01

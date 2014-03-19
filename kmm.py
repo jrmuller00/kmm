@@ -1,4 +1,5 @@
 import sys
+import os
 import getopt
 import team
 import seasonSummary
@@ -571,10 +572,10 @@ def main():
                 for team in teamDict.keys():
                     teamIndex = teamDict[team].get_season_index(key)
                     if teamIndex >= 0:
-                        standingsList.append((teamDict[team].get_name(),1000*ratingsDict[key][teamIndex]))
+                        standingsList.append((team,teamDict[team].get_name(),1000*ratingsDict[key][teamIndex]))
                         teamDict[team].set_SI(key,1000*ratingsDict[key][teamIndex])
 
-                standingsList = sorted(standingsList, key=lambda listitem: listitem[1],reverse=True)
+                standingsList = sorted(standingsList, key=lambda listitem: listitem[2],reverse=True)
                 standingsDict[key] = standingsList
             tourneyDict = read_season_results('tourney_results.csv')
             for k in range(numAlphas):
@@ -585,6 +586,19 @@ def main():
                 for k in range(numAlphas):
                     alphaFile.write('{0: >6.5e} '.format(alphaList[k]))
                 alphaFile.write('{0: >6.5e} {1: >6.5e} {2: >6.5e} {3: >6.5e} {4: >6.5e} {5: >6.5e} {6: >6.5e}\n'.format(overallScore,tstd, tmean, wstd, wmean,lstd,lmean))
+            else:
+                #
+                # write out standings
+                
+                for season in standingsDict.keys():
+                    fp = open(season + '.txt','w')
+                    for team in standingsDict[season]:
+                        fp.write('{0: 4d} {1: >30} {2: >6.5e}\n'.format(team[0],team[1],team[2]))
+                    #os.close(fp)
+
+
+
+
             alphaList[i] = alphaList[i] + delAlpha
     print ('Done!')
 
