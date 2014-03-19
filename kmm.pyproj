@@ -16,7 +16,7 @@
     <InterpreterId>2af0f10d-7135-4994-9156-5d01c9c11b7e</InterpreterId>
     <InterpreterVersion>3.3</InterpreterVersion>
     <LaunchProvider>Standard Python launcher</LaunchProvider>
-    <CommandLineArguments>-a 0.05,0.05,0.89,0.0,0.005,0.005  -b S -d 15</CommandLineArguments>
+    <CommandLineArguments>-a 0.1,0.0,0.9,0.0,0.0,0.0  -b S  -m 1.075,-0.6,0.55</CommandLineArguments>
     <InterpreterPath />
     <InterpreterArguments />
   </PropertyGroup>

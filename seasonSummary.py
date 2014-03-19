@@ -44,6 +44,8 @@ class seasonSummary(object):
 
         self.oppList.append(oppID)
         self.pdList.append(pf-pa)
+        self.tpf = self.tpf + pf
+        self.tpa = self.tpa + pa
 
         #
         # update team record
@@ -130,6 +132,10 @@ class seasonSummary(object):
 
     def get_tot_games(self):
         return self.wins + self.losses
+
+    def get_opponent_list(self):
+        return self.oppList
+
 
 
 

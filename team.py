@@ -112,6 +112,13 @@ class team(object):
         except Exception:
             return 0
 
+    def get_opponent_list(self, season):
+        try:
+            return self.seasonSummaryDict[season].get_opponent_list()
+        except Exception:
+            return []
+
+
 
 
         

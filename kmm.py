@@ -399,7 +399,7 @@ def get_dominant_eigen(eigvals, eigvec):
 
     return domEig
 
-def compare_ratings(tourneyresults, teamDict, skiplist):
+def compare_ratings(tourneyresults, teamDict, skiplist, randomtweak):
 
     seasonPredictions = {}
     sum = 0.0
@@ -408,6 +408,12 @@ def compare_ratings(tourneyresults, teamDict, skiplist):
     lRating = []
     tRating = []
     seasons = sorted(list(tourneyresults.keys()))
+
+    dRmax = randomtweak[0]
+    dRmin = randomtweak[1]
+    betaMax = randomtweak[2]
+    mSlope = (betaMax - 0.5)/(dRmax - dRmin)
+    yInter = betaMax - mSlope*dRmax
     for season in seasons:
         if season not in (skiplist):
             results = tourneyresults[season]
@@ -420,9 +426,26 @@ def compare_ratings(tourneyresults, teamDict, skiplist):
                 lTeam = teamDict[lTeamID].get_season_index(season)
                 teamRatingDiff = teamDict[wTeamID].get_SI(season) - teamDict[lTeamID].get_SI(season)
 
-                if teamRatingDiff > 0:
+                if teamRatingDiff > dRmax:
                     numRight = numRight + 1
                     wRating.append(teamRatingDiff)
+                elif teamRatingDiff > dRmin:
+                    #
+                    # closely rated teams
+                    # add random tweak
+                    beta = mSlope * teamRatingDiff + yInter
+                    if random.random() < betaMax:
+                        if teamRatingDiff > 0.0:
+                            numRight = numRight + 1
+                            wRating.append(teamRatingDiff)
+                        else:
+                            lRating.append(teamRatingDiff)
+                    else:
+                        if teamRatingDiff > 0.0:
+                            lRating.append(teamRatingDiff)
+                        else:
+                            numRight = numRight + 1
+                            wRating.append(teamRatingDiff)
                 else:
                     lRating.append(teamRatingDiff)
                 tRating.append(teamRatingDiff)
@@ -449,6 +472,7 @@ def main():
         -f [alphaSteps]         :   number of alpha steps for simulation
         -h                      :   help on running the code
         -l [filename]           :   tourney slots               default is tourney_slots.csv
+        -m [drmax,drmin,betamax]    : these are the random variables for close ratings games. if drMax < D_Rteams < drmin, then if random in [0,betamax] higher team wins, else lower
         -o [filename]           :   tourney results             default is tourney_results.csv
         -r [filename]           :   regular season results      default is regular_season_results.csv
         -s [filename]           :   seasons                     default is seasons.csv
@@ -468,9 +492,10 @@ def main():
     maxDP = 100
     skipList = []
     writeAlphaData = False
+    randomTweak = (0.5,-0.5,0.75)
 
     try:
-        opts, args = getopt.getopt(sys.argv[1:], "a:b:d:e:f:hl:o:r:st:y:",["help","filename="])
+        opts, args = getopt.getopt(sys.argv[1:], "a:b:d:e:f:hl:m:o:r:st:y:",["help","filename="])
     except getopt.error as msg:
         print (msg)
         print ("for help use --help")
@@ -515,6 +540,9 @@ def main():
             print ("python kmm.py")
         if o == "-l":
             tourneySlotsFile = arg
+        if o == 'm':
+            token = arg.split(',')
+            randomTweak = (token[0],token[1],token[2])
         if o == "-o":
             tourneyResultsFile = arg
         if o == "-r":
@@ -572,7 +600,14 @@ def main():
                 for team in teamDict.keys():
                     teamIndex = teamDict[team].get_season_index(key)
                     if teamIndex >= 0:
-                        standingsList.append((team,teamDict[team].get_name(),1000*ratingsDict[key][teamIndex]))
+                        oppList = teamDict[team].get_opponent_list(key)
+                        sumRatings = 0
+                        numOpp = 0
+                        for oppID in oppList:
+                            sumRatings = sumRatings + 1000*ratingsDict[key][teamDict[oppID].get_season_index(key)]
+                            numOpp = numOpp + 1
+
+                        standingsList.append((team,teamDict[team].get_name(),1000*ratingsDict[key][teamIndex],sumRatings/numOpp,teamDict[team].get_PF(key)/numOpp, teamDict[team].get_PA(key)/numOpp))
                         teamDict[team].set_SI(key,1000*ratingsDict[key][teamIndex])
 
                 standingsList = sorted(standingsList, key=lambda listitem: listitem[2],reverse=True)
@@ -581,7 +616,7 @@ def main():
             for k in range(numAlphas):
                 print('alpha[' + str(k) + '] = ' + str(alphaList[k]) + '  ')
             print ('\n')
-            (overallScore, tstd, tmean, wstd, wmean,lstd,lmean) = compare_ratings(tourneyDict, teamDict, skipList)
+            (overallScore, tstd, tmean, wstd, wmean,lstd,lmean) = compare_ratings(tourneyDict, teamDict, skipList, randomTweak)
             if writeAlphaData == True:
                 for k in range(numAlphas):
                     alphaFile.write('{0: >6.5e} '.format(alphaList[k]))
@@ -593,7 +628,7 @@ def main():
                 for season in standingsDict.keys():
                     fp = open(season + '.txt','w')
                     for team in standingsDict[season]:
-                        fp.write('{0: 4d} {1: >30} {2: >6.5e}\n'.format(team[0],team[1],team[2]))
+                        fp.write('{0: 4d},{1: >30},{2: >6.5e},{3: >6.5e},{4: >6.5e},{5: >6.5e}\n'.format(team[0],team[1],team[2],team[3],team[4],team[5]))
                     #os.close(fp)
 
 
